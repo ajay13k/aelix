@@ -9,14 +9,14 @@ import ChangePassword from "./component/changePassword/changePassword";
 function App() {
   return (
     <>
-          <Switch>
-          <Route exact path="/" component={LoginForm} />
-            <Route exact path="/SidebarWithHeader" component={SidebarWithHeader} />
-            <Route path="/students" component={StudentTable} />
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/myprofile" component={Profile} />
-            <Route path="/changepassword" component={ChangePassword} />
-          </Switch>
+      <Switch>
+        <Route exact path="/" component={LoginForm} />
+        <Route exact path="/SidebarWithHeader" component={SidebarWithHeader} />
+        <Route path="/students" component={StudentTable} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/myprofile" component={Profile} />
+        <Route path="/changepassword" component={ChangePassword} />
+      </Switch>
     </>
   );
 }

@@ -131,6 +131,9 @@ function Profile() {
                 </Box>
               </HStack>
             </Box>
+            <Button  type="button">
+              Cancel
+            </Button>
             <Button onClick={login} type="button">
               save
             </Button>
