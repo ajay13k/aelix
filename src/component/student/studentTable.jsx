@@ -1,9 +1,19 @@
-import { Input, Stack, Box, Text, HStack, Center } from "@chakra-ui/react";
+import {
+  Input,
+  Select,
+  GridItem,
+  Grid,
+  Text,
+  HStack,
+  Heading,
+} from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { FaUserGraduate } from "react-icons/fa";
 function StudentTable() {
   const [student, setStudent] = useState([]);
   const [title, setTitle] = useState("");
+  const [option, setOption] = useState("");
   const api = "http://95.111.202.157:4001/api/student";
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmMyZDdlMjU1Mjk0NzZjZmM1Yjk5NDciLCJpYXQiOjE2NTk0MTkxNzAsImV4cCI6MTY1OTUwNTU3MH0.ipy-alwjelPQ8S_T67dWC3v3hInava8pT5Maiud65ow";
@@ -24,15 +34,34 @@ function StudentTable() {
   };
   return (
     <>
-      <Center>
-        <Stack mt="10" mb={10} w="300px">
+      <HStack m="5">
+        <Text fontSize={30}>
+          <FaUserGraduate />
+        </Text>
+        <Heading>Students</Heading>
+      </HStack>
+      <Grid templateColumns="repeat(2, 1fr)" gap={80}>
+        <GridItem w="50%" h="10" m={30}>
           <Input
             onChange={(e) => setTitle(e.target.value)}
             size="md"
             placeholder="search students"
           />
-        </Stack>
-      </Center>
+        </GridItem>
+        <GridItem w="40%" h="10" m={30}>
+          <HStack>
+            <Text>Filter </Text>
+            <Select
+              placeholder="Select option"
+              onChange={(e) => setOption(e.target.value)}
+            >
+              <option value="option1">Class A</option>
+              <option value="option2">Class B</option>
+              <option value="option3">Class C</option>
+            </Select>
+          </HStack>
+        </GridItem>
+      </Grid>
 
       <table className="table">
         <thead>
