@@ -14,11 +14,11 @@ import {
 import { Link } from "react-router-dom";
 
 function LoginForm() {
-  const [email, setEmail] = useState("");
+  const [username, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const login = () => {
-    const api = "https://foodielandnod.herokuapp.com/api/signIn";
-    let item = { email, password };
+    const api = "http://95.111.202.157:4001/api/login";
+    let item = { username, password };
     axios
       .post(api, item)
       .then((response) => {
@@ -29,7 +29,7 @@ function LoginForm() {
       })
       .catch((err) => {
         console.log(err);
-        alert("Email And Password Or Incorrect");
+        alert("Email And Password or Incorrect");
       });
   };
 
@@ -70,7 +70,7 @@ function LoginForm() {
                 color={"blue.500"}
                 to="changepassword"
               >
-                Forgot Email/Password?
+                Forgot Password?
               </Link>
             </Stack>
             <Button onClick={login} colorScheme={"blue"} variant={"solid"}>

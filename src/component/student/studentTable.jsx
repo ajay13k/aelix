@@ -1,11 +1,12 @@
+import { Input, Stack, Box, Text, HStack, Center } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 function StudentTable() {
   const [student, setStudent] = useState([]);
-  const [searchInput, setSearchInput] = useState("");
+  const [title, setTitle] = useState("");
   const api = "http://95.111.202.157:4001/api/student";
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmMyZDdlMjU1Mjk0NzZjZmM1Yjk5NDciLCJpYXQiOjE2NTg5MDI2NzksImV4cCI6MTY1ODk4OTA3OX0.npvYj9Ghmd8OJ6mGVym4cBxNCIDbU74hFSC8AgAN21g";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmMyZDdlMjU1Mjk0NzZjZmM1Yjk5NDciLCJpYXQiOjE2NTk0MTkxNzAsImV4cCI6MTY1OTUwNTU3MH0.ipy-alwjelPQ8S_T67dWC3v3hInava8pT5Maiud65ow";
   const loadPost = async () => {
     const response = await axios.get(api, {
       headers: { Authorization: `Bearer ${token}` },
@@ -21,26 +22,18 @@ function StudentTable() {
     const student_data = student.filter((e) => e._id !== studentData._id);
     setStudent({ student_data });
   };
-  const searchItems = (searchValue) => {
-    console.log(searchValue);
-    api.filter((value) => {
-      if (searchInput === "") {
-        return value;
-      } else if (value.name.toLowerCase().includes(searchInput.toLowerCase())) {
-        return value;
-      }
-    });
-    setSearchInput(searchValue);
-  };
   return (
     <>
-      <input
-        type="text"
-        name="searchBox"
-        className="form-control my-3"
-        placeholder="Search..."
-        onChange={(e) => searchItems(e.target.value)}
-      />
+      <Center>
+        <Stack mt="10" mb={10} w="300px">
+          <Input
+            onChange={(e) => setTitle(e.target.value)}
+            size="md"
+            placeholder="search students"
+          />
+        </Stack>
+      </Center>
+
       <table className="table">
         <thead>
           <tr>
@@ -52,8 +45,17 @@ function StudentTable() {
           </tr>
         </thead>
         <tbody>
-          {student &&
-            student.map((studentData) => (
+          {student
+            .filter((item) => {
+              if (title === "") {
+                return item;
+              } else if (
+                item.name.toLowerCase().includes(title.toLowerCase())
+              ) {
+                return item;
+              }
+            })
+            .map((studentData) => (
               <tr key={studentData._id}>
                 <td>{studentData.name}</td>
                 <td>{studentData.assignClass.className}</td>
