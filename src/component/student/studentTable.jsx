@@ -16,7 +16,7 @@ function StudentTable() {
   const [option, setOption] = useState("");
   const api = "http://95.111.202.157:4001/api/student";
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmMyZDdlMjU1Mjk0NzZjZmM1Yjk5NDciLCJpYXQiOjE2NTk0MTkxNzAsImV4cCI6MTY1OTUwNTU3MH0.ipy-alwjelPQ8S_T67dWC3v3hInava8pT5Maiud65ow";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmMyZDdlMjU1Mjk0NzZjZmM1Yjk5NDciLCJpYXQiOjE2NTk0MjMxNjUsImV4cCI6MTY1OTUwOTU2NX0.H1is34i74zeXi3J6ZFR-3c2Hq-3-Rh7fcr5X2neaVw8";
   const loadPost = async () => {
     const response = await axios.get(api, {
       headers: { Authorization: `Bearer ${token}` },
