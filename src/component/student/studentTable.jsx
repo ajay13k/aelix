@@ -12,6 +12,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaUserGraduate } from "react-icons/fa";
 import Pagination from "./pagination";
+import { Link } from "react-router-dom";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
 function StudentTable() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,28 +21,6 @@ function StudentTable() {
   const [student, setStudent] = useState([]);
   const [title, setTitle] = useState("");
   const [option, setOption] = useState();
-  const selectHandle = (item) => {
-    if(item.assignClass.className === item.target.value){
-        return item
-    }else if (item.target.value === item.target.value) {
-        const data = student.filter((item) => {
-          return item.assignClass
-            ? item.assignClass.className === item.target.value
-            : "";
-        });
-        if (data.length > 0) {
-            setOption(data);
-          } else {
-            setOption([]);
-          }
-    
-    }
-
-    // console.log(posts);
-    // const post = student.filter((d) => d.assignClass.className === posts)[0];
-    // setOption(post);
-  };
-
   const api = "http://95.111.202.157:4001/api/student";
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmMyZDdlMjU1Mjk0NzZjZmM1Yjk5NDciLCJpYXQiOjE2NTk0MjMxNjUsImV4cCI6MTY1OTUwOTU2NX0.H1is34i74zeXi3J6ZFR-3c2Hq-3-Rh7fcr5X2neaVw8";
@@ -69,9 +49,27 @@ function StudentTable() {
     window.scroll(0, 0);
     setCurrentPage(pageNumber);
   };
+  const selectHandle = (e) => {
+    const post = student.filter(
+      function (result) {
+        return result.assignClass.className === e;
+      }
+
+      // (item) => {
+      //   item.assignClass.className === e.target.value
+      // }
+    );
+    setOption(post);
+  };
 
   return (
     <>
+      <HStack p={5} fontWeight="bold">
+        <AiOutlineArrowLeft />
+        <Link style={{ textDecoration: "none" }} to="SidebarWithHeader">
+          Go Back
+        </Link>
+      </HStack>
       <Container maxW={"1200"} mx="auto" mt={10}>
         <HStack m="5">
           <Text fontSize={30}>
@@ -92,17 +90,21 @@ function StudentTable() {
               <Text>Filter </Text>
               <Select
                 placeholder="Select option"
-                onChange={(e) => selectHandle(e)}
+                onChange={(e) => selectHandle(e.target.value)}
               >
-                {student.map((item) => {
-                  return (
-                    <>
-                      <option key={item._id} value={item.assignClass.className}>
-                        {item.assignClass.className}
-                      </option>
-                    </>
-                  );
-                })}
+                {student &&
+                  student.map((item) => {
+                    return (
+                      <>
+                        <option
+                          key={item._id}
+                          value={item.assignClass.className}
+                        >
+                          {item.assignClass.className}
+                        </option>
+                      </>
+                    );
+                  })}
               </Select>
             </HStack>
           </GridItem>
@@ -119,7 +121,7 @@ function StudentTable() {
             </tr>
           </thead>
           <tbody>
-            {currentPosts
+            {option&&option
               .filter((item) => {
                 if (title === "") {
                   return item;
@@ -146,6 +148,15 @@ function StudentTable() {
                   </td>
                 </tr>
               ))}
+
+
+
+            {/* {option&&option.map((studentData) => (
+              <tr key={studentData._id}>
+                <td>{studentData.name}</td>
+                <td>{studentData.assignClass.className}</td>
+              </tr>
+            ))} */}
           </tbody>
         </table>
       </Container>
