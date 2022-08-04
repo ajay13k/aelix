@@ -6,6 +6,7 @@ import Dashboard from "./component/dashboard/dashboard";
 import Profile from "./component/profile/profile";
 import SidebarWithHeader from "./component/Navbar.jsx";
 import ChangePassword from "./component/changePassword/changePassword";
+import UsingFetch from "./component/student/studentAttendance";
 function App() {
   return (
     <>
@@ -16,6 +17,7 @@ function App() {
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/myprofile" component={Profile} />
         <Route path="/changepassword" component={ChangePassword} />
+        <Route path="/studentAttendace" component={UsingFetch} />
       </Switch>
     </>
   );

@@ -24,13 +24,13 @@ import { Link } from "react-router-dom";
 export default function Dashboard() {
   return (
     <>
-      <HStack p={8} fontWeight="bold">
+      <HStack p={5} fontWeight="bold">
         <AiOutlineArrowLeft />
         <Link style={{ textDecoration: "none" }} to="SidebarWithHeader">
           Go Back
         </Link>
       </HStack>
-      <Container maxW={"1200"} mx="auto" mt={10}>
+      <Container maxW={"1200"} mx="auto">
         <HStack>
           <Text fontSize={30}>
             <MdDashboard />
@@ -55,7 +55,7 @@ export default function Dashboard() {
           </Text>
           <Spacer />
           <Text color="#1a8cff">
-            <Link style={{ textDecoration: "none" }} to="students">
+            <Link style={{ textDecoration: "none" }} to="studentAttendace">
               Attedance Report
             </Link>
           </Text>

@@ -17,13 +17,14 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 
 function StudentTable() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(2);
+  const [postsPerPage] = useState(5);
   const [student, setStudent] = useState([]);
   const [title, setTitle] = useState("");
-  const [option, setOption] = useState();
+  const [option, setOption] = useState([]);
+
   const api = "http://95.111.202.157:4001/api/student";
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmMyZDdlMjU1Mjk0NzZjZmM1Yjk5NDciLCJpYXQiOjE2NTk0MjMxNjUsImV4cCI6MTY1OTUwOTU2NX0.H1is34i74zeXi3J6ZFR-3c2Hq-3-Rh7fcr5X2neaVw8";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmMyZDdlMjU1Mjk0NzZjZmM1Yjk5NDciLCJpYXQiOjE2NTk2MDM3MTMsImV4cCI6MTY1OTY5MDExM30.0FdkL8N4ZnngAWLKDcpaLBhivn7wOadGBvX-C8vzk20";
   const loadPost = async () => {
     const response = await axios.get(api, {
       headers: { Authorization: `Bearer ${token}` },
@@ -42,24 +43,21 @@ function StudentTable() {
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = student.slice(indexOfFirstPost, indexOfLastPost);
-
+  const currentPosts = option.slice(indexOfFirstPost, indexOfLastPost);
   // Change page
   const paginate = (pageNumber) => {
     window.scroll(0, 0);
     setCurrentPage(pageNumber);
   };
   const selectHandle = (e) => {
-    const post = student.filter(
-      function (result) {
+    if (e === "all") {
+      setOption(student);
+    } else {
+      const post = student.filter(function (result) {
         return result.assignClass.className === e;
-      }
-
-      // (item) => {
-      //   item.assignClass.className === e.target.value
-      // }
-    );
-    setOption(post);
+      });
+      setOption(post);
+    }
   };
 
   return (
@@ -89,9 +87,10 @@ function StudentTable() {
             <HStack>
               <Text>Filter </Text>
               <Select
-                placeholder="Select option"
+                defaultValue={"all"}
                 onChange={(e) => selectHandle(e.target.value)}
               >
+                <option value="all">all</option>
                 {student &&
                   student.map((item) => {
                     return (
@@ -121,7 +120,7 @@ function StudentTable() {
             </tr>
           </thead>
           <tbody>
-            {option&&option
+            {currentPosts
               .filter((item) => {
                 if (title === "") {
                   return item;
@@ -131,6 +130,7 @@ function StudentTable() {
                   return item;
                 }
               })
+
               .map((studentData) => (
                 <tr key={studentData._id}>
                   <td>{studentData.name}</td>
@@ -148,15 +148,6 @@ function StudentTable() {
                   </td>
                 </tr>
               ))}
-
-
-
-            {/* {option&&option.map((studentData) => (
-              <tr key={studentData._id}>
-                <td>{studentData.name}</td>
-                <td>{studentData.assignClass.className}</td>
-              </tr>
-            ))} */}
           </tbody>
         </table>
       </Container>
