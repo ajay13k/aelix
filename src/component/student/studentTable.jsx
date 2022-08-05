@@ -24,7 +24,7 @@ function StudentTable() {
 
   const api = "http://95.111.202.157:4001/api/student";
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmMyZDdlMjU1Mjk0NzZjZmM1Yjk5NDciLCJpYXQiOjE2NTk2MDM3MTMsImV4cCI6MTY1OTY5MDExM30.0FdkL8N4ZnngAWLKDcpaLBhivn7wOadGBvX-C8vzk20";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmMyZDdlMjU1Mjk0NzZjZmM1Yjk5NDciLCJpYXQiOjE2NTk2ODg2MzUsImV4cCI6MTY1OTc3NTAzNX0.cJsNNJImVLQmx1uSZ5dwzFz93ksyc9lWt4HiqmfCoYY";
   const loadPost = async () => {
     const response = await axios.get(api, {
       headers: { Authorization: `Bearer ${token}` },
@@ -68,7 +68,7 @@ function StudentTable() {
           Go Back
         </Link>
       </HStack>
-      <Container maxW={"1200"} mx="auto" mt={10}>
+      <Container maxW={"1200"} mx="auto">
         <HStack m="5">
           <Text fontSize={30}>
             <FaUserGraduate />
