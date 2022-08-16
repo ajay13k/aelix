@@ -7,12 +7,14 @@ import {
   HStack,
   Heading,
   Container,
+  Spacer,
+  Box,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaUserGraduate } from "react-icons/fa";
 import Pagination from "./pagination";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
 function StudentTable() {
@@ -84,7 +86,7 @@ function StudentTable() {
             />
           </GridItem>
           <GridItem w="50%" h="10" m={30}>
-            <HStack>
+            <HStack >
               <Text>Filter </Text>
               <Select
                 defaultValue={"all"}
@@ -105,6 +107,12 @@ function StudentTable() {
                     );
                   })}
               </Select>
+              <Spacer/>
+              <Text color="#005580" >
+                <NavLink style={{ textDecoration: "none" }} to="addstudent">
+                  AddStudent
+                </NavLink>
+              </Text>
             </HStack>
           </GridItem>
         </Grid>

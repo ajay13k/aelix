@@ -8,6 +8,8 @@ import SidebarWithHeader from "./component/Navbar.jsx";
 import ChangePassword from "./component/changePassword/changePassword";
 import UsingFetch from "./component/student/studentAttendance";
 import CounSellor from "./component/counsellor/counsellor";
+import AddStudent from "./component/student/addStudent";
+import AddCounsellor from "./component/counsellor/addCounsellor";
 // import SidebarWithHeader from "./component/sidebarwithheader/SidebarWithHeader";
 function App() {
   return (
@@ -17,10 +19,12 @@ function App() {
         <Route exact path="/" component={LoginForm} />
         <Route exact path="/SidebarWithHeader" component={SidebarWithHeader} />
         <Route path="/students" component={StudentTable} />
+        <Route path="/addstudent" component={AddStudent} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/myprofile" component={Profile} />
         <Route path="/changepassword" component={ChangePassword} />
         <Route path="/counsellor" component={CounSellor} />
+        <Route path="/addcounsellor" component={AddCounsellor} />
         <Route path="/studentAttendace" component={UsingFetch} />
       </Switch>
     </>

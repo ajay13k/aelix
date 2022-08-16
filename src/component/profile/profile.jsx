@@ -156,7 +156,7 @@ function Profile() {
                       )}
                     </FormControl>
                   </Box>
-                  <Box Box w={320} paddingLeft="80px">
+                  <Box  w={320} paddingLeft="80px">
                     <FormControl id="country">
                       <FormLabel>City</FormLabel>
                       <Select

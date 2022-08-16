@@ -7,11 +7,12 @@ import {
   HStack,
   Heading,
   Container,
+  Spacer
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaUserGraduate } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link,NavLink} from "react-router-dom";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
 function CounSellor() {
@@ -104,6 +105,12 @@ function CounSellor() {
                     );
                   })}
               </Select>
+              <Spacer />
+              <Text color="#005580">
+                <NavLink style={{ textDecoration: "none" }} to="addcounsellor">
+                  AddCounsellor
+                </NavLink>
+              </Text>
             </HStack>
           </GridItem>
         </Grid>
