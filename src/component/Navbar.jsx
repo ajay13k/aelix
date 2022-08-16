@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
+import Dashboard from "./dashboard/dashboard";
 import {
   IconButton,
   Avatar,
@@ -10,7 +11,6 @@ import {
   VStack,
   Icon,
   useColorModeValue,
-  Link,
   Drawer,
   DrawerContent,
   Text,
@@ -22,6 +22,8 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
+  Link,
+  Button,
 } from "@chakra-ui/react";
 import {
   FiMenu,
@@ -67,7 +69,14 @@ const LinkItems: Array<LinkItemProps> = [
     ),
     icon: FaUserGraduate,
   },
-  { name: "Counsellor", icon: BiUserCircle },
+  {
+    name: (
+      <NavLink style={{ textDecoration: "none" }} to="counsellor">
+        Counsellor
+      </NavLink>
+    ),
+    icon: BiUserCircle,
+  },
   { name: "Pin", icon: FiMoreHorizontal },
   {
     name: (
@@ -148,6 +157,9 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       ))}
     </Box>
   );
+};
+const handleAlert = () => {
+  alert("Alert");
 };
 
 interface NavItemProps extends FlexProps {
@@ -235,6 +247,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
           variant="ghost"
           aria-label="open menu"
           icon={<FiBell />}
+          onClick={handleAlert}
         />
         <Flex alignItems={"center"}>
           <Menu>
@@ -265,8 +278,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               bg={useColorModeValue("white", "gray.900")}
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
-              <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
+              <NavLink to="myprofile" style={{ textDecoration: "none" }}>
+                <MenuItem>Profile</MenuItem>
+              </NavLink>
               <MenuDivider />
               <MenuItem>
                 <button onClick={handleLogout}>logout</button>

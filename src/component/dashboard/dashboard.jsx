@@ -17,11 +17,29 @@ import {
   FormLabel,
   Container,
 } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { MdDashboard } from "react-icons/md";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { Link } from "react-router-dom";
-
+import { API } from "../../config/config";
 export default function Dashboard() {
+  const [getClass, setClass] = useState("");
+  const [getStudent, setStudent] = useState("");
+  useEffect(() => {
+    const student = async () => {
+      const response = await axios.get(`${API.getStudent}`);
+      setStudent(response.data.data);
+    };
+    student();
+  }, []);
+  useEffect(() => {
+    const getClass = async () => {
+      const response = await axios.get(`${API.getClass}`);
+      setClass(response.data.data);
+    };
+    getClass();
+  }, []);
   return (
     <>
       <HStack p={5} fontWeight="bold">
@@ -42,11 +60,17 @@ export default function Dashboard() {
 
           <HStack>
             <Text>Filter BY</Text>
-            <Select placeholder="Class">
-              <option value="option1">Class A</option>
-              <option value="option1">Class B</option>
-              <option value="option1">Class C</option>
+            <Select>
+              {getClass &&
+                getClass.map((item) => {
+                  return (
+                    <option value={item._id} key={item._id}>
+                      {item.className}
+                    </option>
+                  );
+                })}
             </Select>
+            ;
           </HStack>
         </HStack>
         <HStack mt={5}>

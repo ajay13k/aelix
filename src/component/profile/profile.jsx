@@ -11,10 +11,10 @@ import {
   Button,
   Heading,
   Text,
-  useColorModeValue,
   VStack,
   Avatar,
   Select,
+  FormHelperText,
 } from "@chakra-ui/react";
 import { Link, NavLink } from "react-router-dom";
 import { AiOutlineArrowLeft } from "react-icons/ai";
@@ -27,6 +27,20 @@ function Profile() {
   const [city, setCity] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
+  const [error, seterror] = useState(false);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (
+      email.length === 0 ||
+      mobile.length === 0 ||
+      address.length === 0 ||
+      city.length === 0 ||
+      stateId.length === 0 ||
+      countryId.length === 0
+    ) {
+      seterror(true);
+    }
+  };
   useEffect(() => {
     const api = "http://95.111.202.157:4001/api/getAllCountry";
     const loadPost = async () => {
@@ -44,9 +58,7 @@ function Profile() {
     };
     getState();
   });
-  const handleSubmit = (e) => {
-    e.preventDefualt();
-  };
+
   return (
     <>
       <HStack fontWeight="bold">
@@ -56,7 +68,7 @@ function Profile() {
         </Link>
       </HStack>
       <Flex align={"center"} justify={"center"}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => handleSubmit(e)}>
           <Stack>
             <HStack>
               <Avatar size={"sm"} src={"https://bit.ly/sage-adebayo"} />
@@ -87,9 +99,16 @@ function Profile() {
                         placeholder="street number"
                         value={address}
                       />
+                      {error && address.length <= 0 ? (
+                        <FormHelperText color="red">
+                          address is required
+                        </FormHelperText>
+                      ) : (
+                        ""
+                      )}
                     </FormControl>
                   </Box>
-                  <Box>
+                  <Box w={240}>
                     <FormControl id="state">
                       <FormLabel>State</FormLabel>
                       <Select onChange={(e) => setStateId(e.target.value)}>
@@ -103,11 +122,18 @@ function Profile() {
                             );
                           })}
                       </Select>
+                      {error && address.length <= 0 ? (
+                        <FormHelperText color="red">
+                          state is required
+                        </FormHelperText>
+                      ) : (
+                        ""
+                      )}
                     </FormControl>
                   </Box>
                 </HStack>
                 <HStack>
-                  <Box mr={20}>
+                  <Box w={240}>
                     <FormControl>
                       <FormLabel>Country</FormLabel>
                       <Select onChange={(e) => setCountryId(e.target.value)}>
@@ -121,9 +147,16 @@ function Profile() {
                             );
                           })}
                       </Select>
+                      {error && countryId.length <= 0 ? (
+                        <FormHelperText color="red">
+                          country is required
+                        </FormHelperText>
+                      ) : (
+                        ""
+                      )}
                     </FormControl>
                   </Box>
-                  <Box>
+                  <Box Box w={320} paddingLeft="80px">
                     <FormControl id="country">
                       <FormLabel>City</FormLabel>
                       <Select
@@ -132,6 +165,13 @@ function Profile() {
                       >
                         <option value={city}>indore</option>
                       </Select>
+                      {error && city.length <= 0 ? (
+                        <FormHelperText color="red">
+                          city is required
+                        </FormHelperText>
+                      ) : (
+                        ""
+                      )}
                     </FormControl>
                   </Box>
                 </HStack>
@@ -149,6 +189,13 @@ function Profile() {
                           type="text"
                           placeholder="email address"
                         />
+                        {error && email.length <= 0 ? (
+                          <FormHelperText color="red">
+                            email is required
+                          </FormHelperText>
+                        ) : (
+                          ""
+                        )}
                       </FormControl>
                     </Box>
                     <Box>
@@ -160,22 +207,31 @@ function Profile() {
                           type="text"
                           placeholder=" mobile number"
                         />
+                        {error && mobile.length <= 0 ? (
+                          <FormHelperText color="red">
+                            mobile number is required
+                          </FormHelperText>
+                        ) : (
+                          ""
+                        )}
                       </FormControl>
                     </Box>
                   </HStack>
                 </Box>
               </Stack>
             </Box>
-            <HStack gap={20}>
+            <HStack gap={36}>
               <NavLink
                 to="/sidebarwithheader"
                 style={{ textDecoration: "none" }}
               >
                 <Button w={200}>Cancel</Button>
               </NavLink>
-              <Button w={200} colorScheme="blue" type="submit">
-                Save
-              </Button>
+              <Box paddingLeft={39}>
+                <Button w={200} colorScheme="blue" type="submit">
+                  Save
+                </Button>
+              </Box>
             </HStack>
           </Stack>
         </form>

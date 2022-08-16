@@ -11,11 +11,10 @@ import {
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaUserGraduate } from "react-icons/fa";
-import Pagination from "./pagination";
 import { Link } from "react-router-dom";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
-function StudentTable() {
+function CounSellor() {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(3);
   const [student, setStudent] = useState([]);
@@ -73,7 +72,7 @@ function StudentTable() {
           <Text fontSize={30}>
             <FaUserGraduate />
           </Text>
-          <Heading>Students</Heading>
+          <Heading>Counsellor</Heading>
         </HStack>
         <Grid templateColumns="repeat(2, 1fr)" gap={80}>
           <GridItem w="50%" h="10" m={30}>
@@ -151,14 +150,8 @@ function StudentTable() {
           </tbody>
         </table>
       </Container>
-      <Pagination
-        postsPerPage={postsPerPage}
-        totalPosts={student.length}
-        paginate={paginate}
-        currentPage={currentPage}
-      />
     </>
   );
 }
 
-export default StudentTable;
+export default CounSellor;

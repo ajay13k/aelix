@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   Button,
   Flex,
@@ -6,53 +8,87 @@ import {
   Heading,
   Input,
   Stack,
-  useColorModeValue,
+  Image,
+  FormHelperText,
+  HStack,
+  Box,
+  Text
 } from "@chakra-ui/react";
-export default function ChangePassword() {
+import { FiUnlock } from "react-icons/fi";
+import { NavLink } from "react-router-dom";
+
+function Changepassword() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, seterror] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (username.length === 0 || password.length === 0) {
+      seterror(true);
+    }
+  };
+
   return (
-    <Flex
-      minH={"100vh"}
-      align={"center"}
-      justify={"center"}
-      bg={useColorModeValue("gray.50", "gray.800")}
-    >
-      <Stack
-        spacing={4}
-        w={"full"}
-        maxW={"md"}
-        bg={useColorModeValue("white", "gray.700")}
-        rounded={"xl"}
-        boxShadow={"lg"}
-        p={6}
-        my={12}
-      >
-        <Heading lineHeight={1.1} fontSize={{ base: "2xl", md: "3xl" }}>
-          Enter new password
-        </Heading>
-        <FormControl id="email" isRequired>
-          <FormLabel>Email address</FormLabel>
-          <Input
-            placeholder="your-email@example.com"
-            _placeholder={{ color: "gray.500" }}
-            type="email"
-          />
-        </FormControl>
-        <FormControl id="password" isRequired>
-          <FormLabel>Password</FormLabel>
-          <Input type="password" />
-        </FormControl>
-        <Stack spacing={6}>
-          <Button
-            bg={"blue.400"}
-            color={"white"}
-            _hover={{
-              bg: "blue.500",
-            }}
-          >
-            Submit
-          </Button>
-        </Stack>
-      </Stack>
-    </Flex>
+    <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
+      <Flex p={8} flex={1} align={"center"} justify={"center"}>
+        <form onSubmit={handleSubmit}>
+          <Stack spacing={4} w={"full"} maxW={"md"}>
+            <HStack>
+              <Text fontSize={25}>
+                <FiUnlock />
+              </Text>
+              <Heading fontSize={"2xl"}>change Password</Heading>
+            </HStack>
+            <FormControl id="username">
+              <FormLabel>Username</FormLabel>
+              <Input onChange={(e) => setUsername(e.target.value)} />
+              {error && username.length <= 0 ? (
+                <FormHelperText color="red">
+                  username is required
+                </FormHelperText>
+              ) : (
+                ""
+              )}
+            </FormControl>
+            <FormControl id="password">
+              <FormLabel>Password</FormLabel>
+              <Input
+                onChange={(e) => setPassword(e.target.value)}
+                type="password"
+              />
+              {error && password.length <= 0 ? (
+                <FormHelperText color="red">
+                  password is required
+                </FormHelperText>
+              ) : (
+                ""
+              ) }
+            </FormControl>
+            <Stack spacing={6}>
+              <Stack
+                direction={{ base: "column", sm: "row" }}
+                align={"start"}
+                justify={"space-between"}
+              ></Stack>
+              <HStack gap={10}>
+                <NavLink
+                  to="/"
+                  style={{ textDecoration: "none" }}
+                >
+                  <Button w={200}>Cancel</Button>
+                </NavLink>
+                <Box>
+                  <Button w={200} colorScheme="blue" type="submit">
+                    Update
+                  </Button>
+                </Box>
+              </HStack>
+            </Stack>
+          </Stack>
+        </form>
+      </Flex>
+    </Stack>
   );
 }
+export default Changepassword;
