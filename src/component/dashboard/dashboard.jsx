@@ -22,24 +22,42 @@ import axios from "axios";
 import { MdDashboard } from "react-icons/md";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { API } from "../../config/config";
+import { API, BASE_URL } from "../../config/config";
 export default function Dashboard() {
-  const [getClass, setClass] = useState("");
-  const [getStudent, setStudent] = useState("");
+  // const [getClass, setClass] = useState("");
+  const [getstudent, setStudent] = useState("");
+  const [option, setOption] = useState([]);
+
   useEffect(() => {
+    const token = localStorage.getItem("token");
     const student = async () => {
-      const response = await axios.get(`${API.getStudent}`);
+      const response = await axios.get(`${API.getStudent}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setStudent(response.data.data);
     };
     student();
   }, []);
-  useEffect(() => {
-    const getClass = async () => {
-      const response = await axios.get(`${API.getClass}`);
-      setClass(response.data.data);
-    };
-    getClass();
-  }, []);
+
+  // useEffect(() => {
+  //   const getClass = async () => {
+  //     const response = await axios.get(`${API.getClass}`);
+  //     setClass(response.data.data);
+  //   };
+  //   getClass();
+  // }, []);
+
+  const selectHandle = (e) => {
+    if (e === "all") {
+      setOption(getstudent);
+    } else {
+      const post = getstudent.filter(function (result) {
+        return result.assignClass.className === e;
+      });
+      setOption(post);
+    }
+  };
+
   return (
     <>
       <HStack p={5} fontWeight="bold">
@@ -60,13 +78,19 @@ export default function Dashboard() {
 
           <HStack>
             <Text>Filter BY</Text>
-            <Select>
-              {getClass &&
-                getClass.map((item) => {
+            <Select
+              defaultValue={"all"}
+              onChange={(e) => selectHandle(e.target.value)}
+            >
+              <option value="all">all</option>
+              {getstudent &&
+                getstudent.map((item) => {
                   return (
-                    <option value={item._id} key={item._id}>
-                      {item.className}
-                    </option>
+                    <>
+                      <option key={item._id} value={item.assignClass.className}>
+                        {item.assignClass.className}
+                      </option>
+                    </>
                   );
                 })}
             </Select>
@@ -213,22 +237,23 @@ export default function Dashboard() {
           <Spacer />
           <Box p="4" w={400} border="1px solid black" boxShadow={"2xl"}>
             <Heading size={50}>Student Out Of Class</Heading>
-            <HStack spacing={6} mt="5">
-              <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
-              <Text fontSize={"sm"}>Ajay Kushwah</Text>
-            </HStack>
-            <HStack spacing={6} mt="2">
-              <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
-              <Text fontSize={"sm"}>Ajay Kushwah</Text>
-            </HStack>
-            <HStack spacing={6} mt="2">
-              <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
-              <Text fontSize={"sm"}>Ajay Kushwah</Text>
-            </HStack>
-            <HStack spacing={6} mt="2">
-              <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
-              <Text fontSize={"sm"}>Ajay Kushwah</Text>
-            </HStack>
+            {option &&
+              option.slice(0, 3).map((item) => {
+                return (
+                  <>
+                    <HStack spacing={6} mt="5">
+                      <Avatar
+                        name="Dan Abrahmov"
+                        src={`${BASE_URL}/${item.image}`}
+                      />
+                      <HStack>
+                        <Text fontSize={"sm"}>{item.name}</Text>
+                        <Text fontSize={"sm"}>{item.assignClass.className}</Text>
+                      </HStack>
+                    </HStack>
+                  </>
+                );
+              })}
           </Box>
         </Flex>
       </Container>

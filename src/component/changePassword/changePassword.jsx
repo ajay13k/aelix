@@ -12,7 +12,7 @@ import {
   FormHelperText,
   HStack,
   Box,
-  Text
+  Text,
 } from "@chakra-ui/react";
 import { FiUnlock } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
@@ -63,7 +63,7 @@ function Changepassword() {
                 </FormHelperText>
               ) : (
                 ""
-              ) }
+              )}
             </FormControl>
             <Stack spacing={6}>
               <Stack
@@ -72,10 +72,7 @@ function Changepassword() {
                 justify={"space-between"}
               ></Stack>
               <HStack gap={10}>
-                <NavLink
-                  to="/"
-                  style={{ textDecoration: "none" }}
-                >
+                <NavLink to="/" style={{ textDecoration: "none" }}>
                   <Button w={200}>Cancel</Button>
                 </NavLink>
                 <Box>

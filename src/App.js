@@ -10,6 +10,8 @@ import UsingFetch from "./component/student/studentAttendance";
 import CounSellor from "./component/counsellor/counsellor";
 import AddStudent from "./component/student/addStudent";
 import AddCounsellor from "./component/counsellor/addCounsellor";
+import Pin from "./component/pin";
+import Chatt from "./component/chat/chatt";
 // import SidebarWithHeader from "./component/sidebarwithheader/SidebarWithHeader";
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
         <Route path="/counsellor" component={CounSellor} />
         <Route path="/addcounsellor" component={AddCounsellor} />
         <Route path="/studentAttendace" component={UsingFetch} />
+        <Route path="/pin" component={Pin} />
+        <Route path="/chat" component={Chatt} />
       </Switch>
     </>
   );

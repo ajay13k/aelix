@@ -1,3 +1,4 @@
+import { API } from "../../config/config";
 import {
   Input,
   Select,
@@ -7,57 +8,51 @@ import {
   HStack,
   Heading,
   Container,
-  Spacer
+  Spacer,
 } from "@chakra-ui/react";
+import Pagination from "../student/pagination";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaUserGraduate } from "react-icons/fa";
-import { Link,NavLink} from "react-router-dom";
-import { AiOutlineArrowLeft } from "react-icons/ai";
+import { Link, NavLink } from "react-router-dom";
+import { AiOutlineArrowLeft, AiFillEdit, AiFillDelete } from "react-icons/ai";
 
 function CounSellor() {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(3);
   const [student, setStudent] = useState([]);
   const [title, setTitle] = useState("");
-  const [option, setOption] = useState([]);
-
-  const api = "http://95.111.202.157:4001/api/student";
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmMyZDdlMjU1Mjk0NzZjZmM1Yjk5NDciLCJpYXQiOjE2NTk2ODg2MzUsImV4cCI6MTY1OTc3NTAzNX0.cJsNNJImVLQmx1uSZ5dwzFz93ksyc9lWt4HiqmfCoYY";
+  // const [counsellor,setCounsellor]= useState("")
+  const token = localStorage.getItem("token");
   const loadPost = async () => {
-    const response = await axios.get(api, {
+    const response = await axios.get(`${API.getStudent}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     setStudent(response.data.data);
   };
+  // const counsellorSeach = async () => {
+  //   const response = await axios.get(`${API.counsellorSearch}`, {
+  //     headers: { Authorization: `Bearer ${token}` },
+  //   });
+  //   setCounsellor(response.data.data);
+
+  // };
+
   useEffect(() => {
     loadPost();
   }, []);
-  const onDelete = async (studentData) => {
-    const api = "http://95.111.202.157:4001/api/deleteStudent";
-    await axios.delete(api + "/" + studentData._id);
-    const student_data = student.filter((e) => e._id !== studentData._id);
-    setStudent({ student_data });
-  };
+
+  // useEffect(() => {
+  //   counsellorSeach();
+  // }, []);
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = option.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = student.slice(indexOfFirstPost, indexOfLastPost);
   // Change page
   const paginate = (pageNumber) => {
     window.scroll(0, 0);
     setCurrentPage(pageNumber);
-  };
-  const selectHandle = (e) => {
-    if (e === "all") {
-      setOption(student);
-    } else {
-      const post = student.filter(function (result) {
-        return result.assignClass.className === e;
-      });
-      setOption(post);
-    }
   };
 
   return (
@@ -80,32 +75,11 @@ function CounSellor() {
             <Input
               onChange={(e) => setTitle(e.target.value)}
               size="md"
-              placeholder="search students"
+              placeholder="search counsellor"
             />
           </GridItem>
           <GridItem w="50%" h="10" m={30}>
             <HStack>
-              <Text>Filter </Text>
-              <Select
-                defaultValue={"all"}
-                onChange={(e) => selectHandle(e.target.value)}
-              >
-                <option value="all">all</option>
-                {student &&
-                  student.map((item) => {
-                    return (
-                      <>
-                        <option
-                          key={item._id}
-                          value={item.assignClass.className}
-                        >
-                          {item.assignClass.className}
-                        </option>
-                      </>
-                    );
-                  })}
-              </Select>
-              <Spacer />
               <Text color="#005580">
                 <NavLink style={{ textDecoration: "none" }} to="addcounsellor">
                   AddCounsellor
@@ -120,8 +94,7 @@ function CounSellor() {
             <tr>
               <th>Name</th>
               <th>Class</th>
-              <th>Medical</th>
-              <th>Emergency</th>
+              <th>Assign Students</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -141,22 +114,28 @@ function CounSellor() {
                 <tr key={studentData._id}>
                   <td>{studentData.name}</td>
                   <td>{studentData.assignClass.className}</td>
-                  <td></td>
-                  <td></td>
+                  <td>3</td>
                   <td>
-                    <button
-                      onClick={() => onDelete(studentData)}
-                      className="btn btn-danger"
-                    >
-                      Delete
-                    </button>
-                    <button className="btn btn-primary">edit</button>
+                    <HStack>
+                      <button className="btn btn-danger">
+                        <AiFillDelete />
+                      </button>
+                      <button className="btn btn-primary">
+                        <AiFillEdit />
+                      </button>
+                    </HStack>
                   </td>
                 </tr>
               ))}
           </tbody>
         </table>
       </Container>
+      <Pagination
+        postsPerPage={postsPerPage}
+        totalPosts={student.length}
+        paginate={paginate}
+        currentPage={currentPage}
+      />
     </>
   );
 }

@@ -28,6 +28,8 @@ function Profile() {
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
   const [error, seterror] = useState(false);
+  const [mobileError, setMobileError] = useState("");
+  console.log("anay", mobileError);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
@@ -39,6 +41,11 @@ function Profile() {
       countryId.length === 0
     ) {
       seterror(true);
+    }
+    const pattern = "/^(+d{1,3}[- ]?)?d{10}$/";
+    if (!pattern.match(mobile)) {
+      setMobileError("invalid number");
+    } else {
     }
   };
   useEffect(() => {
@@ -156,7 +163,7 @@ function Profile() {
                       )}
                     </FormControl>
                   </Box>
-                  <Box  w={320} paddingLeft="80px">
+                  <Box w={320} paddingLeft="80px">
                     <FormControl id="country">
                       <FormLabel>City</FormLabel>
                       <Select

@@ -176,10 +176,7 @@ function AddStudent() {
               </Stack>
             </Box>
             <HStack gap={36}>
-              <NavLink
-                to="/students"
-                style={{ textDecoration: "none" }}
-              >
+              <NavLink to="students" style={{ textDecoration: "none" }}>
                 <Button w={200}>Cancel</Button>
               </NavLink>
               <Box paddingLeft={39}>

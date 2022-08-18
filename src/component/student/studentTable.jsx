@@ -1,3 +1,4 @@
+import { API } from "../../config/config";
 import {
   Input,
   Select,
@@ -15,7 +16,7 @@ import axios from "axios";
 import { FaUserGraduate } from "react-icons/fa";
 import Pagination from "./pagination";
 import { Link, NavLink } from "react-router-dom";
-import { AiOutlineArrowLeft } from "react-icons/ai";
+import { AiOutlineArrowLeft,AiFillDelete,AiFillEdit  } from "react-icons/ai";
 
 function StudentTable() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,12 +24,9 @@ function StudentTable() {
   const [student, setStudent] = useState([]);
   const [title, setTitle] = useState("");
   const [option, setOption] = useState([]);
-
-  const api = "http://95.111.202.157:4001/api/student";
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmMyZDdlMjU1Mjk0NzZjZmM1Yjk5NDciLCJpYXQiOjE2NTk2ODg2MzUsImV4cCI6MTY1OTc3NTAzNX0.cJsNNJImVLQmx1uSZ5dwzFz93ksyc9lWt4HiqmfCoYY";
+  const token = localStorage.getItem("token");
   const loadPost = async () => {
-    const response = await axios.get(api, {
+    const response = await axios.get(`${API.getStudent}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     setStudent(response.data.data);
@@ -36,12 +34,6 @@ function StudentTable() {
   useEffect(() => {
     loadPost();
   }, []);
-  const onDelete = async (studentData) => {
-    const api = "http://95.111.202.157:4001/api/deleteStudent";
-    await axios.delete(api + "/" + studentData._id);
-    const student_data = student.filter((e) => e._id !== studentData._id);
-    setStudent({ student_data });
-  };
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -86,7 +78,7 @@ function StudentTable() {
             />
           </GridItem>
           <GridItem w="50%" h="10" m={30}>
-            <HStack >
+            <HStack>
               <Text>Filter </Text>
               <Select
                 defaultValue={"all"}
@@ -107,8 +99,8 @@ function StudentTable() {
                     );
                   })}
               </Select>
-              <Spacer/>
-              <Text color="#005580" >
+              <Spacer />
+              <Text color="#005580">
                 <NavLink style={{ textDecoration: "none" }} to="addstudent">
                   AddStudent
                 </NavLink>
@@ -146,13 +138,14 @@ function StudentTable() {
                   <td></td>
                   <td></td>
                   <td>
-                    <button
-                      onClick={() => onDelete(studentData)}
-                      className="btn btn-danger"
-                    >
-                      Delete
-                    </button>
-                    <button className="btn btn-primary">edit</button>
+                  <HStack>
+                      <button className="btn btn-danger">
+                        <AiFillDelete />
+                      </button>
+                      <button className="btn btn-primary">
+                        <AiFillEdit />
+                      </button>
+                    </HStack>
                   </td>
                 </tr>
               ))}

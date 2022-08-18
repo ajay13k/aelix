@@ -32,7 +32,8 @@ function LoginForm() {
     axios
       .post(`${API.login}`, item)
       .then((response) => {
-        const token = response.data.accessToken;
+        const token = response.data.token;
+        console.log(token);
         localStorage.setItem("token", token);
         alert("Login Successfully");
         window.location = "/SidebarWithHeader";
@@ -46,7 +47,7 @@ function LoginForm() {
   };
 
   return (
-    <Container  maxW={'7xl'}>
+    <Container maxW={"7xl"}>
       <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
         <Flex flex={1}>
           <Image

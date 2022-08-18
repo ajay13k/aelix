@@ -8,7 +8,7 @@ export const API = {
   getAllUser: `${BASE_URL}/api/getUser`,
   updateUser: `${BASE_URL}/api/updateUser`,
   deleteUser: `${BASE_URL}/api/deleteUser`,
-  counsellorSearch: `${BASE_URL}/api/searchUser`,
+  counsellorSearch: `${BASE_URL}/api/searchUser/m`,
 
   getAllCountry: `${BASE_URL}/api/getAllCountry`,
   getStateBYCountryId: `${BASE_URL}/api/state`,
@@ -27,5 +27,4 @@ export const API = {
   attendanceReport: `${BASE_URL}/api/getStudentRecords`,
   getCounsellorNameByClassId: `${BASE_URL}/api/getCouncellorbyClass`,
   getCounsellorStudent: `${BASE_URL}/api/getStu`,
-
 };

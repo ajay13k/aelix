@@ -77,7 +77,14 @@ const LinkItems: Array<LinkItemProps> = [
     ),
     icon: BiUserCircle,
   },
-  { name: "Pin", icon: FiMoreHorizontal },
+  {
+    name: (
+      <NavLink style={{ textDecoration: "none" }} to="pin">
+        Pin
+      </NavLink>
+    ),
+    icon: FiMoreHorizontal,
+  },
   {
     name: (
       <NavLink style={{ textDecoration: "none" }} to="changepassword">
@@ -86,7 +93,14 @@ const LinkItems: Array<LinkItemProps> = [
     ),
     icon: FiUnlock,
   },
-  { name: "Chat", icon: BsChatLeftDotsFill },
+  {
+    name: (
+      <NavLink style={{ textDecoration: "none" }} to="chat">
+        Chat
+      </NavLink>
+    ),
+    icon: BsChatLeftDotsFill,
+  },
 ];
 
 export default function SidebarWithHeader({
