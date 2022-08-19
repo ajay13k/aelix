@@ -17,6 +17,7 @@ import {
   FormLabel,
   Container,
 } from "@chakra-ui/react";
+import "./style.css"
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { MdDashboard } from "react-icons/md";
@@ -103,11 +104,11 @@ export default function Dashboard() {
             Class A
           </Text>
           <Spacer />
-          <Text color="#1a8cff">
+          {/* <Text color="#1a8cff">
             <Link style={{ textDecoration: "none" }} to="studentAttendace">
               Attedance Report
             </Link>
-          </Text>
+          </Text> */}
         </HStack>
         <Grid templateColumns="repeat(4, 1fr)" mt={30} gap={2}>
           <GridItem>
@@ -118,6 +119,7 @@ export default function Dashboard() {
               boxShadow={"2xl"}
               rounded={"md"}
               overflow={"hidden"}
+              className="zoom"
             >
               <Box>
                 <Stack align={"center"}>
@@ -147,6 +149,7 @@ export default function Dashboard() {
               boxShadow={"2xl"}
               rounded={"md"}
               overflow={"hidden"}
+              className="zoom"
             >
               <Box>
                 <Stack align={"center"}>
@@ -176,6 +179,7 @@ export default function Dashboard() {
               boxShadow={"2xl"}
               rounded={"md"}
               overflow={"hidden"}
+              className="zoom"
             >
               <Box>
                 <Stack align={"center"}>
@@ -205,6 +209,7 @@ export default function Dashboard() {
               boxShadow={"2xl"}
               rounded={"md"}
               overflow={"hidden"}
+              className="zoom"
             >
               <Box>
                 <Stack align={"center"}>
