@@ -20,7 +20,7 @@ export const API = {
   studentUpdate: `${BASE_URL}/api/updateStudent`,
   studentDismiss: `${BASE_URL}/api/dismiss`,
   studentAssignClass: `${BASE_URL}/api/updateManyRecords`,
-  bulkUpload: `${BASE_URL}/api/uploadcsv`,
+
 
   saveAttendance: `${BASE_URL}/api/saveAttaindence`,
   updateAttendace: `${BASE_URL}/api/updateAttaindence`,

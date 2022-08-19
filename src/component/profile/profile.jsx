@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { API } from "../../config/config";
 import {
   Flex,
   Box,
@@ -49,9 +50,8 @@ function Profile() {
     }
   };
   useEffect(() => {
-    const api = "http://95.111.202.157:4001/api/getAllCountry";
     const loadPost = async () => {
-      const response = await axios.get(api);
+      const response = await axios.get(`${API.getAllCountry}`);
       setProfile(response.data.country);
     };
     loadPost();

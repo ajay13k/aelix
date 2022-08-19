@@ -17,7 +17,7 @@ import {
   FormLabel,
   Container,
 } from "@chakra-ui/react";
-import "./style.css"
+import "./style.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { MdDashboard } from "react-icons/md";
@@ -75,29 +75,27 @@ export default function Dashboard() {
           <Text fontSize={20} fontWeight={700}>
             Class Dashboard
           </Text>
-       
 
           <HStack pl="800px">
-          <Text>Filter BY</Text>
-          <Select
-            w={50}
-            defaultValue={"all"}
-            onChange={(e) => selectHandle(e.target.value)}
-          >
-            <option value="all">all</option>
-            {getstudent &&
-              getstudent.map((item) => {
-                return (
-                  <>
-                    <option key={item._id} value={item.assignClass.className}>
-                      {item.assignClass.className}
-                    </option>
-                  </>
-                );
-              })}
-          </Select>
+            <Text>Filter BY</Text>
+            <Select
+            
+              defaultValue={"all"}
+              onChange={(e) => selectHandle(e.target.value)}
+            >
+              <option value="all">all</option>
+              {getstudent &&
+                getstudent.map((item) => {
+                  return (
+                    <>
+                      <option key={item._id} value={item.assignClass.className}>
+                        {item.assignClass.className}
+                      </option>
+                    </>
+                  );
+                })}
+            </Select>
           </HStack>
-          
         </HStack>
         <HStack mt={5}>
           <Text color="blue" fontWeight={700}>
@@ -134,7 +132,7 @@ export default function Dashboard() {
                 <Stack justify={"center"}>
                   <Stack align={"center"}>
                     <Text fontSize={50} color="blue" fontWeight={600}>
-                      25
+                      6
                     </Text>
                   </Stack>
                 </Stack>
@@ -164,7 +162,7 @@ export default function Dashboard() {
                 <Stack justify={"center"}>
                   <Stack align={"center"}>
                     <Text fontSize={50} color="blue" fontWeight={600}>
-                      24
+                      0
                     </Text>
                   </Stack>
                 </Stack>
@@ -233,13 +231,23 @@ export default function Dashboard() {
           </GridItem>
         </Grid>
         <Flex mt={100}>
-          <Box p="4" w={760} border="1px solid black" boxShadow={"2xl"}>
-            <Heading size={50}>Absent</Heading>
-            <HStack spacing={6} mt="5">
-              <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
-              <Text fontSize={"sm"}>Ajay Kushwah</Text>
-            </HStack>
-          </Box>
+          {option &&
+            option.slice(0, 1).map((item) => {
+              return (
+                <>
+                  <Box p="4" w={760} border="1px solid black" boxShadow={"2xl"}>
+                    <Heading size={50}>Absent</Heading>
+                    <HStack spacing={6} mt="5">
+                      <Avatar
+                        name="Dan Abrahmov"
+                        src={`${BASE_URL}/${item.image}`}
+                      />
+                      <Text fontSize={"sm"}>{item.name}</Text>
+                    </HStack>
+                  </Box>
+                </>
+              );
+            })}
           <Spacer />
           <Box p="4" w={400} border="1px solid black" boxShadow={"2xl"}>
             <Heading size={50}>Student Out Of Class</Heading>
