@@ -60,42 +60,43 @@ export default function Dashboard() {
 
   return (
     <>
-      <HStack p={5} fontWeight="bold">
+      <HStack p={10} fontWeight="bold">
         <AiOutlineArrowLeft />
         <Link style={{ textDecoration: "none" }} to="SidebarWithHeader">
           Go Back
         </Link>
       </HStack>
-      <Container maxW={"1200"} mx="auto">
+      <Container maxW="1200">
         <HStack>
           <Text fontSize={30}>
             <MdDashboard />
           </Text>
-          <Text fontSize={30} fontWeight={700}>
+          <Text fontSize={20} fontWeight={700}>
             Class Dashboard
           </Text>
-          <Spacer />
+       
 
-          <HStack>
-            <Text>Filter BY</Text>
-            <Select
-              defaultValue={"all"}
-              onChange={(e) => selectHandle(e.target.value)}
-            >
-              <option value="all">all</option>
-              {getstudent &&
-                getstudent.map((item) => {
-                  return (
-                    <>
-                      <option key={item._id} value={item.assignClass.className}>
-                        {item.assignClass.className}
-                      </option>
-                    </>
-                  );
-                })}
-            </Select>
-            ;
+          <HStack pl="800px">
+          <Text>Filter BY</Text>
+          <Select
+            w={50}
+            defaultValue={"all"}
+            onChange={(e) => selectHandle(e.target.value)}
+          >
+            <option value="all">all</option>
+            {getstudent &&
+              getstudent.map((item) => {
+                return (
+                  <>
+                    <option key={item._id} value={item.assignClass.className}>
+                      {item.assignClass.className}
+                    </option>
+                  </>
+                );
+              })}
+          </Select>
           </HStack>
+          
         </HStack>
         <HStack mt={5}>
           <Text color="blue" fontWeight={700}>
@@ -108,7 +109,7 @@ export default function Dashboard() {
             </Link>
           </Text>
         </HStack>
-        <Grid templateColumns="repeat(4, 1fr)" mt={30}>
+        <Grid templateColumns="repeat(4, 1fr)" mt={30} gap={2}>
           <GridItem>
             <Box
               maxW={"270px"}
@@ -248,7 +249,9 @@ export default function Dashboard() {
                       />
                       <HStack>
                         <Text fontSize={"sm"}>{item.name}</Text>
-                        <Text fontSize={"sm"}>{item.assignClass.className}</Text>
+                        <Text fontSize={"sm"}>
+                          {item.assignClass.className}
+                        </Text>
                       </HStack>
                     </HStack>
                   </>

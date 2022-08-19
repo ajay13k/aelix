@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
-import { HStack, Spacer } from "@chakra-ui/react";
+import { Button, HStack, Spacer } from "@chakra-ui/react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
-function Chat({ socket, username, room }) {
+function Chat({ socket }) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const sendMessage = async () => {
     if (currentMessage !== "") {
       const messageData = {
-        room: room,
-        author: username,
         message: currentMessage,
         time:
           new Date(Date.now()).getHours() +
@@ -50,7 +48,6 @@ function Chat({ socket, username, room }) {
                 return (
                   <div
                     className="message"
-                    id={username === messageContent.author ? "you" : "other"}
                   >
                     <div>
                       <div className="message-content">
@@ -78,7 +75,7 @@ function Chat({ socket, username, room }) {
                 event.key === "Enter" && sendMessage();
               }}
             />
-            <button onClick={sendMessage}>&#9658;</button>
+            <Button onClick={sendMessage}>&#9658;</Button>
           </div>
         </div>
         <Spacer/>

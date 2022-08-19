@@ -4,6 +4,7 @@ import { useState } from "react";
 import Chat from "./chat";
 const endpoint = 'http://localhost:3000/'
 const socket = io(endpoint,{transports:['websocket']});
+
 function Chatt() {
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
@@ -38,7 +39,7 @@ function Chatt() {
           <button onClick={joinRoom}>Chat</button>
         </div>
       ) : (
-        <Chat socket={socket} username={username} room={room} />
+        <Chat socket={socket}  />
       )}
     </div>
   );

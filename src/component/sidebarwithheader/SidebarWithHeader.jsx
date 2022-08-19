@@ -12,9 +12,10 @@ import {
   MenuItem,
   MenuList,
   Text,
-  Container
+  Container,
 } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
+import { MdDashboard } from "react-icons/md";
 const SidebarWithHeader = () => {
   return (
     <>
@@ -46,9 +47,7 @@ const SidebarWithHeader = () => {
                   </HStack>
                 </MenuButton>
                 <MenuList>
-                  <MenuItem>
-                    Profile
-                  </MenuItem>
+                  <MenuItem>Profile</MenuItem>
                   <MenuDivider />
                   <MenuItem>
                     <button>logout</button>
@@ -60,18 +59,25 @@ const SidebarWithHeader = () => {
         </Box>
       </div>
       <div class="sidenav">
-      <NavLink style={{ textDecoration: "none" }} to="dashboard">
-        DashBoard
-      </NavLink>
-      <NavLink style={{ textDecoration: "none" }} to="myprofile">
-        Profile
-      </NavLink>
-      <NavLink style={{ textDecoration: "none" }} to="students">
-        Students
-      </NavLink>
-      <NavLink style={{ textDecoration: "none" }} to="changepassword">
-        Change Password
-      </NavLink>
+        <Box mt={20}>
+          <HStack >
+            <Text fontSize={30}>
+              <MdDashboard />
+            </Text>
+            <NavLink style={{ textDecoration: "none" }} to="dashboard">
+              DashBoard
+            </NavLink>
+          </HStack>
+          <NavLink style={{ textDecoration: "none" }} to="myprofile">
+            Profile
+          </NavLink>
+          <NavLink style={{ textDecoration: "none" }} to="students">
+            Students
+          </NavLink>
+          <NavLink style={{ textDecoration: "none" }} to="changepassword">
+            Change Password
+          </NavLink>
+        </Box>
       </div>
     </>
   );

@@ -1,6 +1,5 @@
 import React, { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
-import Dashboard from "./dashboard/dashboard";
 import {
   IconButton,
   Avatar,
@@ -224,6 +223,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     const tokeDelete = localStorage.removeItem("token");
     if (!tokeDelete) {
       window.location = "/";
+      alert("Logout Successfully")
     }
   };
   return (
