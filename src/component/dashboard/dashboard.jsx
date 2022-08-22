@@ -79,7 +79,6 @@ export default function Dashboard() {
           <HStack pl="800px">
             <Text>Filter BY</Text>
             <Select
-            
               defaultValue={"all"}
               onChange={(e) => selectHandle(e.target.value)}
             >

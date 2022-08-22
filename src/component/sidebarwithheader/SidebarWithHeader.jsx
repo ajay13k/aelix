@@ -60,7 +60,7 @@ const SidebarWithHeader = () => {
       </div>
       <div class="sidenav">
         <Box mt={20}>
-          <HStack >
+          <HStack>
             <Text fontSize={30}>
               <MdDashboard />
             </Text>

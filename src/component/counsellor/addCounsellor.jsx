@@ -30,7 +30,7 @@ function AddCounsellor() {
       lastName.length === 0 ||
       fatherName.length === 0 ||
       dob.length === 0 ||
-      address.length === 0 
+      address.length === 0
       // assign.length === 0
     ) {
       seterror(true);

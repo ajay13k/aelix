@@ -42,9 +42,8 @@ function Profile() {
       countryId.length === 0
     ) {
       seterror(true);
-    }
-    else{
-      alert("Submit Form Successfully")
+    } else {
+      alert("Submit Form Successfully");
     }
     const pattern = "/^(+d{1,3}[- ]?)?d{10}$/";
     if (!pattern.match(mobile)) {
