@@ -32,11 +32,12 @@ import {
   FiMoreHorizontal,
 } from "react-icons/fi";
 import { IconType } from "react-icons";
-import { BsChatLeftDotsFill } from "react-icons/bs";
+import { BsChatLeftDotsFill, BsFillAlarmFill } from "react-icons/bs";
 import { FaUserGraduate } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { BiUserCircle } from "react-icons/bi";
+import { MdNotificationsOff } from "react-icons/md";
 import { ReactText } from "react";
 
 interface LinkItemProps {
@@ -223,7 +224,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     const tokeDelete = localStorage.removeItem("token");
     if (!tokeDelete) {
       window.location = "/";
-      alert("Logout Successfully")
+      alert("Logout Successfully");
     }
   };
   return (
@@ -254,6 +255,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       >
         Logo
       </Text>
+      <Text>Security Alerts</Text>
 
       <HStack spacing={{ base: "0", md: "6" }}>
         <IconButton
@@ -263,6 +265,13 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
           icon={<FiBell />}
           onClick={handleAlert}
         />
+        <Text fontSize={40} color="black">
+          <MdNotificationsOff />
+        </Text>
+        <Text fontSize={50} color="red">
+          <BsFillAlarmFill />
+        </Text>
+
         <Flex alignItems={"center"}>
           <Menu>
             <MenuButton

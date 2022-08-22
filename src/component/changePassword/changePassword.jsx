@@ -27,6 +27,9 @@ function Changepassword() {
     if (username.length === 0 || password.length === 0) {
       seterror(true);
     }
+    else{
+      alert("Password Change Successfully")
+    }
   };
 
   return (

@@ -11,7 +11,8 @@ import CounSellor from "./component/counsellor/counsellor";
 import AddStudent from "./component/student/addStudent";
 import AddCounsellor from "./component/counsellor/addCounsellor";
 import Pin from "./component/pin";
-import Chatt from "./component/chat/chatt";
+import Chatt from "./component/chat/chatt"
+import Page404 from "./component/404";
 // import SidebarWithHeader from "./component/sidebarwithheader/SidebarWithHeader";
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/studentAttendace" component={UsingFetch} />
         <Route path="/pin" component={Pin} />
         <Route path="/chat" component={Chatt} />
+        <Route path="/*" component={Page404} />
       </Switch>
     </>
   );

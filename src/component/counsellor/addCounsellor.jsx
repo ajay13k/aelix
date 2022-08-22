@@ -30,10 +30,12 @@ function AddCounsellor() {
       lastName.length === 0 ||
       fatherName.length === 0 ||
       dob.length === 0 ||
-      address.length === 0 ||
-      assign.length === 0
+      address.length === 0 
+      // assign.length === 0
     ) {
       seterror(true);
+    } else {
+      alert("Successfully Update");
     }
   };
   return (
@@ -176,10 +178,7 @@ function AddCounsellor() {
               </Stack>
             </Box>
             <HStack gap={36}>
-              <NavLink
-                to="/counsellor"
-                style={{ textDecoration: "none" }}
-              >
+              <NavLink to="/counsellor" style={{ textDecoration: "none" }}>
                 <Button w={200}>Cancel</Button>
               </NavLink>
               <Box paddingLeft={39}>

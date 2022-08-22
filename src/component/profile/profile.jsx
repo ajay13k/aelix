@@ -37,11 +37,14 @@ function Profile() {
       email.length === 0 ||
       mobile.length === 0 ||
       address.length === 0 ||
-      city.length === 0 ||
+      // city.length === 0 ||
       stateId.length === 0 ||
       countryId.length === 0
     ) {
       seterror(true);
+    }
+    else{
+      alert("Submit Form Successfully")
     }
     const pattern = "/^(+d{1,3}[- ]?)?d{10}$/";
     if (!pattern.match(mobile)) {
