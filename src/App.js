@@ -4,23 +4,26 @@ import StudentTable from "./component/student/studentTable";
 import LoginForm from "./component/loginForm/loginForm";
 import Dashboard from "./component/dashboard/dashboard";
 import Profile from "./component/profile/profile";
-import SidebarWithHeader from "./component/Navbar.jsx";
+// import SidebarWithHeader from "./component/Navbar.jsx";
 import ChangePassword from "./component/changePassword/changePassword";
 import UsingFetch from "./component/student/studentAttendance";
 import CounSellor from "./component/counsellor/counsellor";
 import AddStudent from "./component/student/addStudent";
 import AddCounsellor from "./component/counsellor/addCounsellor";
 import Pin from "./component/pin";
-import Chatt from "./component/chat/chatt";
+import Chatt from "./component/chat/chatt"
 import Page404 from "./component/404";
-// import SidebarWithHeader from "./component/sidebarwithheader/SidebarWithHeader";
+import SidebarWithHeader from "./component/sidebarwithheader/SidebarWithHeader";
+import {
+  Box
+} from "@chakra-ui/react";
 function App() {
   return (
     <>
-      {/* <SidebarWithHeader/> */}
+  
       <Switch>
         <Route exact path="/" component={LoginForm} />
-        <Route exact path="/SidebarWithHeader" component={SidebarWithHeader} />
+        <Route path="/SidebarWithHeader" component={SidebarWithHeader} />
         <Route path="/students" component={StudentTable} />
         <Route path="/addstudent" component={AddStudent} />
         <Route path="/dashboard" component={Dashboard} />

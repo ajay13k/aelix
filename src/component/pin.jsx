@@ -2,9 +2,11 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import PinInput from "react-pin-input";
 import { Container, Box,HStack } from "@chakra-ui/react";
+import SidebarWithHeader from "./sidebarwithheader/SidebarWithHeader";
 const Pin = () => {
   return (
     <>
+    <SidebarWithHeader/>
       <HStack p={10} fontWeight="bold">
         <AiOutlineArrowLeft />
         <Link style={{ textDecoration: "none" }} to="SidebarWithHeader">

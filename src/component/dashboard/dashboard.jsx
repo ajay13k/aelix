@@ -2,112 +2,136 @@ import {
   Heading,
   Avatar,
   Box,
-  Center,
-  Image,
   Flex,
   Text,
   Stack,
-  Button,
   useColorModeValue,
   Grid,
   GridItem,
   HStack,
   Spacer,
   Select,
-  FormLabel,
   Container,
+  VStack,
 } from "@chakra-ui/react";
-import "./style.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { MdDashboard } from "react-icons/md";
-import { AiOutlineArrowLeft } from "react-icons/ai";
-import { Link } from "react-router-dom";
 import { API, BASE_URL } from "../../config/config";
+import SidebarWithHeader from "../sidebarwithheader/SidebarWithHeader";
 export default function Dashboard() {
-  // const [getClass, setClass] = useState("");
-  const [getstudent, setStudent] = useState("");
-  const [option, setOption] = useState([]);
+  const [classData, setClassData] = useState([]);
+  const [rows, setStudentDetail] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filterr, setFilter] = useState([]);
+  const [classNameOnChange, setclassNameOnChange] = useState("");
+  const [classNameIdOnChange, setclassNameIdOnChange] = useState("");
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const student = async () => {
-      const response = await axios.get(`${API.getStudent}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setStudent(response.data.data);
-    };
-    student();
+    GetStudentData();
+    GetClassData();
   }, []);
+  console.log("govind", rows);
 
-  // useEffect(() => {
-  //   const getClass = async () => {
-  //     const response = await axios.get(`${API.getClass}`);
-  //     setClass(response.data.data);
-  //   };
-  //   getClass();
-  // }, []);
-
-  const selectHandle = (e) => {
-    if (e === "all") {
-      setOption(getstudent);
+  const GetStudentData = async () => {
+    const token = localStorage.getItem("token");
+    const response = await axios
+      .get(`${API.getStudent}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .catch((err) => {});
+    if (response.status === 200) {
+      setLoading(false);
     } else {
-      const post = getstudent.filter(function (result) {
-        return result.assignClass.className === e;
+      setLoading(true);
+    }
+    setStudentDetail(response.data);
+    setFilter(response.data.data);
+  };
+
+  const GetClassData = async () => {
+    const response = await axios.get(`${API.getClass}`).catch((err) => {});
+    if (response.status === 200) {
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+    setClassData(response.data.data);
+  };
+
+  const SelectOnChange = (ele) => {
+    const classNameGet = classData.find((item) => {
+      return item && item._id === ele ? item.className : "";
+    });
+    setclassNameOnChange(classNameGet && classNameGet.className);
+    setclassNameIdOnChange(ele);
+
+    if (ele === "all") {
+      setFilter(rows.data);
+    } else if (ele === ele) {
+      const data = rows.data.filter((item) => {
+        return item.assignClass ? item.assignClass._id === ele : "";
       });
-      setOption(post);
+      if (data.length > 0) {
+        setFilter(data);
+      } else {
+        setFilter([]);
+      }
     }
   };
+  const filterDataAbs =
+    filterr.length === 0
+      ? []
+      : filterr.filter((vall) =>
+          vall && vall.attaindence && vall.attaindence !== null
+            ? []
+            : vall.attaindence && vall.attaindence.attendence.includes("0")
+        );
+  const filterDataPre =
+    filterr.length === 0
+      ? []
+      : filterr.filter((vall) =>
+          vall && vall.attaindence && vall.attaindence !== null
+            ? []
+            : vall.attaindence && vall.attaindence.attendence.includes("1")
+        );
+  const filteroutofClass =
+    filterr.length === 0
+      ? []
+      : filterr.filter((vall) =>
+          vall && vall.attaindence && vall.attaindence !== null
+            ? []
+            : vall.attaindence && vall.attaindence.out_of_class
+        );
 
   return (
     <>
-      <HStack p={10} fontWeight="bold">
-        <AiOutlineArrowLeft />
-        <Link style={{ textDecoration: "none" }} to="SidebarWithHeader">
-          Go Back
-        </Link>
-      </HStack>
-      <Container maxW="1200">
-        <HStack>
-          <Text fontSize={30}>
-            <MdDashboard />
-          </Text>
-          <Text fontSize={20} fontWeight={700}>
-            Class Dashboard
-          </Text>
+      <SidebarWithHeader />
+      <Container maxW="100%" w="85%" ml="15%" pt="100px">
+        <HStack fontWeight="bold" fontSize="20px">
+          <MdDashboard />
+          <Text>Class Dashboard</Text>
+        </HStack>
 
-          <HStack pl="800px">
-            <Text>Filter BY</Text>
-            <Select
-              defaultValue={"all"}
-              onChange={(e) => selectHandle(e.target.value)}
-            >
-              <option value="all">all</option>
-              {getstudent &&
-                getstudent.map((item) => {
-                  return (
-                    <>
-                      <option key={item._id} value={item.assignClass.className}>
-                        {item.assignClass.className}
-                      </option>
-                    </>
-                  );
-                })}
-            </Select>
-          </HStack>
+        <HStack pl="800px">
+          <Text>Filter By:</Text>
+          <Select
+            w={40}
+            defaultValue={"all"}
+            onChange={(e) => SelectOnChange(e.target.value)}
+          >
+            <option value="all">all</option>
+            {classData &&
+              classData.map((item) => {
+                return (
+                  <option key={item._id} value={item._id}>
+                    {item.className}
+                  </option>
+                );
+              })}
+          </Select>
         </HStack>
-        <HStack mt={5}>
-          <Text color="blue" fontWeight={700}>
-            Class A
-          </Text>
-          <Spacer />
-          {/* <Text color="#1a8cff">
-            <Link style={{ textDecoration: "none" }} to="studentAttendace">
-              Attedance Report
-            </Link>
-          </Text> */}
-        </HStack>
-        <Grid templateColumns="repeat(4, 1fr)" mt={30} gap={2}>
+        <Grid templateColumns="repeat(4, 1fr)" mt={30} gap={4}>
           <GridItem>
             <Box
               maxW={"270px"}
@@ -122,7 +146,7 @@ export default function Dashboard() {
                 <Stack align={"center"}>
                   <Heading
                     fontSize={"2xl"}
-                    fontWeight={500}
+                    fontWeight="bold"
                     fontFamily={"body"}
                   >
                     Total Student
@@ -131,7 +155,11 @@ export default function Dashboard() {
                 <Stack justify={"center"}>
                   <Stack align={"center"}>
                     <Text fontSize={50} color="blue" fontWeight={600}>
-                      6
+                      {filterr.length === 0
+                        ? 0
+                        : classNameOnChange === "all"
+                        ? rows.totalcount
+                        : filterr.length}
                     </Text>
                   </Stack>
                 </Stack>
@@ -152,16 +180,20 @@ export default function Dashboard() {
                 <Stack align={"center"}>
                   <Heading
                     fontSize={"2xl"}
-                    fontWeight={500}
+                    fontWeight="bold"
                     fontFamily={"body"}
                   >
-                    Present Student
+                    Present
                   </Heading>
                 </Stack>
                 <Stack justify={"center"}>
                   <Stack align={"center"}>
                     <Text fontSize={50} color="blue" fontWeight={600}>
-                      0
+                      {filterDataPre.length === 0
+                        ? 0
+                        : classNameOnChange === "all"
+                        ? rows.totalpresent
+                        : filterDataPre.length}
                     </Text>
                   </Stack>
                 </Stack>
@@ -182,16 +214,20 @@ export default function Dashboard() {
                 <Stack align={"center"}>
                   <Heading
                     fontSize={"2xl"}
-                    fontWeight={500}
+                    fontWeight="bold"
                     fontFamily={"body"}
                   >
-                    Absent Student
+                    Absent
                   </Heading>
                 </Stack>
                 <Stack justify={"center"}>
                   <Stack align={"center"}>
                     <Text fontSize={50} color="blue" fontWeight={600}>
-                      1
+                      {filterDataAbs.length === 0
+                        ? 0
+                        : classNameOnChange === "all"
+                        ? rows.totalabsent
+                        : filterDataAbs.length}
                     </Text>
                   </Stack>
                 </Stack>
@@ -212,7 +248,7 @@ export default function Dashboard() {
                 <Stack align={"center"}>
                   <Heading
                     fontSize={"2xl"}
-                    fontWeight={500}
+                    fontWeight="bold"
                     fontFamily={"body"}
                   >
                     Out Of Class
@@ -221,7 +257,11 @@ export default function Dashboard() {
                 <Stack justify={"center"}>
                   <Stack align={"center"}>
                     <Text fontSize={50} color="blue" fontWeight={600}>
-                      4
+                      {filteroutofClass.length === 0
+                        ? 0
+                        : classNameOnChange === "all"
+                        ? rows.totalout
+                        : filteroutofClass.length}
                     </Text>
                   </Stack>
                 </Stack>
@@ -229,29 +269,20 @@ export default function Dashboard() {
             </Box>
           </GridItem>
         </Grid>
-        <Flex mt={100}>
-          {option &&
-            option.slice(0, 1).map((item) => {
-              return (
-                <>
-                  <Box p="4" w={760} border="1px solid black" boxShadow={"2xl"}>
-                    <Heading size={50}>Absent</Heading>
-                    <HStack spacing={6} mt="5">
-                      <Avatar
-                        name="Dan Abrahmov"
-                        src={`${BASE_URL}/${item.image}`}
-                      />
-                      <Text fontSize={"sm"}>{item.name}</Text>
-                    </HStack>
-                  </Box>
-                </>
-              );
-            })}
-          <Spacer />
-          <Box p="4" w={400} border="1px solid black" boxShadow={"2xl"}>
-            <Heading size={50}>Student Out Of Class</Heading>
-            {option &&
-              option.slice(0, 3).map((item) => {
+        <Flex mt={35}>
+          <Box
+            p="4"
+            w={760}
+            border="1px solid black"
+            boxShadow={"2xl"}
+            ml="10px"
+          >
+            <Heading size={50}>Absent</Heading>
+            {filterDataAbs.length === 0 ? (
+              <Text>No records found</Text>
+            ) : (
+              filterDataAbs.length &&
+              filterDataAbs.map((item) => {
                 return (
                   <>
                     <HStack spacing={6} mt="5">
@@ -259,16 +290,43 @@ export default function Dashboard() {
                         name="Dan Abrahmov"
                         src={`${BASE_URL}/${item.image}`}
                       />
-                      <HStack>
-                        <Text fontSize={"sm"}>{item.name}</Text>
-                        <Text fontSize={"sm"}>
-                          {item.assignClass.className}
-                        </Text>
-                      </HStack>
+
+                      <Text fontSize={"sm"}>{item.name}</Text>
+                      <Text fontSize={"sm"}>{item.assignClass.className}</Text>
                     </HStack>
                   </>
                 );
-              })}
+              })
+            )}
+          </Box>
+          <Box
+            p="4"
+            w={390}
+            border="1px solid black"
+            boxShadow={"2xl"}
+            ml="10px"
+          >
+            <Heading size={50}>Student Out Of Class</Heading>
+            {filteroutofClass.length === 0 ? (
+              <Text>No records found</Text>
+            ) : (
+              filteroutofClass.length &&
+              filteroutofClass.map((item) => {
+                return (
+                  <>
+                    <HStack spacing={6} mt="5">
+                      <Avatar
+                        name="Dan Abrahmov"
+                        src={`${BASE_URL}/${item.image}`}
+                      />
+
+                      <Text fontSize={"sm"}>{item.name}</Text>
+                      <Text>{item.attaindence.out_of_class}</Text>
+                    </HStack>
+                  </>
+                );
+              })
+            )}
           </Box>
         </Flex>
       </Container>
