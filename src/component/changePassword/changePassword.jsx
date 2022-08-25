@@ -19,13 +19,18 @@ import { NavLink } from "react-router-dom";
 import SidebarWithHeader from "../sidebarwithheader/SidebarWithHeader";
 
 function Changepassword() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [ConformPassword, setConformPassword] = useState("");
   const [error, seterror] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (username.length === 0 || password.length === 0) {
+    if (
+      oldPassword.length === 0 ||
+      newPassword.length === 0 ||
+      ConformPassword.length
+    ) {
       seterror(true);
     } else {
       alert("Password Change Successfully");
@@ -35,7 +40,7 @@ function Changepassword() {
   return (
     <>
       <SidebarWithHeader />
-      <Container maxW="1200" w="85%" ml="15%" pt="100px">
+      <Container maxW="1200" w="85%" ml="15%">
         <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
           <Flex p={8} flex={1} align={"center"} justify={"center"}>
             <form onSubmit={handleSubmit}>
@@ -46,26 +51,40 @@ function Changepassword() {
                   </Text>
                   <Heading fontSize={"2xl"}>change Password</Heading>
                 </HStack>
-                <FormControl id="username">
-                  <FormLabel>Username</FormLabel>
-                  <Input onChange={(e) => setUsername(e.target.value)} />
-                  {error && username.length <= 0 ? (
+                <FormControl>
+                  <FormLabel>Old Password</FormLabel>
+                  <Input onChange={(e) => setOldPassword(e.target.value)} />
+                  {error && oldPassword.length <= 0 ? (
                     <FormHelperText color="red">
-                      username is required
+                      old password is required
                     </FormHelperText>
                   ) : (
                     ""
                   )}
                 </FormControl>
-                <FormControl id="password">
-                  <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <FormLabel>New Password</FormLabel>
                   <Input
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => setNewPassword(e.target.value)}
                     type="password"
                   />
-                  {error && password.length <= 0 ? (
+                  {error && newPassword.length <= 0 ? (
                     <FormHelperText color="red">
-                      password is required
+                      new password is required
+                    </FormHelperText>
+                  ) : (
+                    ""
+                  )}
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Conform Password</FormLabel>
+                  <Input
+                    onChange={(e) => setConformPassword(e.target.value)}
+                    type="password"
+                  />
+                  {error && ConformPassword.length <= 0 ? (
+                    <FormHelperText color="red">
+                      conform password is required
                     </FormHelperText>
                   ) : (
                     ""
@@ -79,7 +98,7 @@ function Changepassword() {
                   ></Stack>
                   <HStack gap={10}>
                     <NavLink
-                      to="/SidebarWithHeader"
+                      to="/dashboard"
                       style={{ textDecoration: "none" }}
                     >
                       <Button w={200}>Cancel</Button>

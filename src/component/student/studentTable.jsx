@@ -15,8 +15,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaUserGraduate } from "react-icons/fa";
 import Pagination from "./pagination";
-import { Link, NavLink } from "react-router-dom";
-import { AiOutlineArrowLeft, AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { NavLink } from "react-router-dom";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import SidebarWithHeader from "../sidebarwithheader/SidebarWithHeader";
 
 function StudentTable() {
@@ -35,11 +35,26 @@ function StudentTable() {
   useEffect(() => {
     loadPost();
   }, []);
-  // Get current posts
+
+  const handleDelete = (item) => {
+    axios
+      .delete(`${API.studentDelete}`, {
+        data: {
+          id: [item],
+        },
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        console.log(res.data);
+        loadPost();
+
+      })
+  };
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = option.slice(indexOfFirstPost, indexOfLastPost);
-  // Change page
+
   const paginate = (pageNumber) => {
     window.scroll(0, 0);
     setCurrentPage(pageNumber);
@@ -59,95 +74,97 @@ function StudentTable() {
     <>
       <SidebarWithHeader />
       <Container maxW="1200" w="85%" ml="15%" pt="100px">
+        <HStack m="5">
+          <Text fontSize={30}>
+            <FaUserGraduate />
+          </Text>
+          <Heading>Students</Heading>
+        </HStack>
+        <Grid templateColumns="repeat(2, 1fr)" gap={80}>
+          <GridItem w="50%" h="10" m={30}>
+            <Input
+              onChange={(e) => setTitle(e.target.value)}
+              size="md"
+              placeholder="search students"
+            />
+          </GridItem>
+          <GridItem w="50%" h="10" m={30}>
+            <HStack>
+              <Text>Filter </Text>
+              <Select
+                defaultValue={"all"}
+                onChange={(e) => selectHandle(e.target.value)}
+              >
+                <option value="all">all</option>
+                {student &&
+                  student.map((item) => {
+                    return (
+                      <>
+                        <option
+                          key={item._id}
+                          value={item.assignClass.className}
+                        >
+                          {item.assignClass.className}
+                        </option>
+                      </>
+                    );
+                  })}
+              </Select>
+              <Spacer />
+              <Text color="#005580">
+                <NavLink style={{ textDecoration: "none" }} to="/addstudent">
+                  AddStudent
+                </NavLink>
+              </Text>
+            </HStack>
+          </GridItem>
+        </Grid>
 
-          <HStack m="5">
-            <Text fontSize={30}>
-              <FaUserGraduate />
-            </Text>
-            <Heading>Students</Heading>
-          </HStack>
-          <Grid templateColumns="repeat(2, 1fr)" gap={80}>
-            <GridItem w="50%" h="10" m={30}>
-              <Input
-                onChange={(e) => setTitle(e.target.value)}
-                size="md"
-                placeholder="search students"
-              />
-            </GridItem>
-            <GridItem w="50%" h="10" m={30}>
-              <HStack>
-                <Text>Filter </Text>
-                <Select
-                  defaultValue={"all"}
-                  onChange={(e) => selectHandle(e.target.value)}
-                >
-                  <option value="all">all</option>
-                  {student &&
-                    student.map((item) => {
-                      return (
-                        <>
-                          <option
-                            key={item._id}
-                            value={item.assignClass.className}
-                          >
-                            {item.assignClass.className}
-                          </option>
-                        </>
-                      );
-                    })}
-                </Select>
-                <Spacer />
-                <Text color="#005580">
-                  <NavLink style={{ textDecoration: "none" }} to="addstudent">
-                    AddStudent
-                  </NavLink>
-                </Text>
-              </HStack>
-            </GridItem>
-          </Grid>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Class</th>
+              <th>Medical</th>
+              <th>Emergency</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentPosts
+              .filter((item) => {
+                if (title === "") {
+                  return item;
+                } else if (
+                  item.name.toLowerCase().includes(title.toLowerCase())
+                ) {
+                  return item;
+                }
+              })
 
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Class</th>
-                <th>Medical</th>
-                <th>Emergency</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentPosts
-                .filter((item) => {
-                  if (title === "") {
-                    return item;
-                  } else if (
-                    item.name.toLowerCase().includes(title.toLowerCase())
-                  ) {
-                    return item;
-                  }
-                })
-
-                .map((studentData) => (
-                  <tr key={studentData._id}>
-                    <td>{studentData.name}</td>
-                    <td>{studentData.assignClass.className}</td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                      <HStack>
-                        <button className="btn btn-danger">
-                          <AiFillDelete />
-                        </button>
-                        <button className="btn btn-primary">
-                          <AiFillEdit />
-                        </button>
-                      </HStack>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+              .map((studentData) => (
+                <tr key={studentData._id}>
+                  <td>{studentData.name}</td>
+                  <td>{studentData.assignClass.className}</td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <HStack>
+                      <button
+                        // onClick={() => handleDelete(studentData._id)}
+                        className="btn btn-danger"
+                      >
+                        <AiFillDelete />
+                      </button>
+                      <button className="btn btn-primary">
+                        <AiFillEdit />
+                      </button>
+                    </HStack>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
         <Pagination
           postsPerPage={postsPerPage}
           totalPosts={student.length}

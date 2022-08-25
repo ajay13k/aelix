@@ -36,7 +36,7 @@ function LoginForm() {
         console.log(token);
         localStorage.setItem("token", token);
         alert("Login Successfully");
-        window.location = "/SidebarWithHeader";
+        window.location = "/dashboard";
       })
       .catch((err) => {
         if (username && password) {

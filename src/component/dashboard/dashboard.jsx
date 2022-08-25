@@ -31,7 +31,6 @@ export default function Dashboard() {
     GetStudentData();
     GetClassData();
   }, []);
-  console.log("govind", rows);
 
   const GetStudentData = async () => {
     const token = localStorage.getItem("token");

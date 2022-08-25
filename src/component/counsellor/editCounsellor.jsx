@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { API } from "../../config/config";
+import { useParams } from "react-router-dom";
 import {
   Flex,
   Box,
@@ -17,7 +18,8 @@ import {
 import SidebarWithHeader from "../sidebarwithheader/SidebarWithHeader";
 import { NavLink } from "react-router-dom";
 import { FaUserGraduate } from "react-icons/fa";
-function AddCounsellor() {
+import { useEffect } from "react";
+function EditCounsellor() {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [mobile, setMobile] = useState("");
@@ -27,6 +29,8 @@ function AddCounsellor() {
   const [error, seterror] = useState(false);
   const [consellor, setCousellor] = useState("");
   const item = { name, lastName, mobile, password, username, assign };
+  const token = localStorage.getItem("token");
+  const { id } = useParams();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,28 +39,52 @@ function AddCounsellor() {
       lastName === "" ||
       mobile === "" ||
       password === "" ||
-      username === ""
-      // assign.length === 0
+      username === "" ||
+      assign === 0
     ) {
       seterror(true);
     } else {
-      fetchData();
     }
   };
-  const token = localStorage.getItem("token");
-
-  const fetchData = async () => {
-    await axios({
-      method: "POST",
-      url: `${API.addCounsellor}`,
-      data: item,
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((dataa) => {
-        console.log(dataa, "datta");
+  const getUser = async () => {
+    const token = localStorage.getItem("token");
+    await axios
+      .get(`${API.getUser}/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setCousellor(res.data.data);
+        setName(res.data.data[0].name);
+        setLastName(res.data.data[0].lastname);
+        setMobile(res.data.data[0].phone);
+        setUserName(res.data.data[0].username);
+        setPassword(res.data.data[0].password);
+        setAssign(res.data.data[0].classId);
       })
       .catch((err) => {
-        console.log(err, "errr");
+        console.log(err);
+      });
+  };
+
+  getUser();
+
+  const handleUpdate = () => {
+    axios
+      .put(
+        `${API.updateUser}/${id}`,
+        { item },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then((response) => {
+        return response.data;
+      })
+      .then((data) => {
+        console.log("data", data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -65,12 +93,16 @@ function AddCounsellor() {
       <SidebarWithHeader />
       <Flex align={"center"} justify={"center"} maxW="1200" w="85%" ml="13%">
         <form onSubmit={(e) => handleSubmit(e)}>
+          {/* {consellor.map(() => {
+                  return <>
+                  </>;
+                })} */}
           <Stack>
             <Box width="800px" p={5}>
               <HStack mb={30}>
                 <FaUserGraduate />
                 <Heading size="sm" mb={15}>
-                  Add Counsellor
+                  Edit Counsellor
                 </Heading>
               </HStack>
               <Stack spacing={4}>
@@ -83,7 +115,8 @@ function AddCounsellor() {
                         onChange={(e) => setName(e.target.value)}
                         type="text"
                         placeholder="Name"
-                        value={name}
+                        Value={name}
+                        name={name}
                       />
                       {error && name.length <= 0 ? (
                         <FormHelperText color="red">
@@ -102,7 +135,8 @@ function AddCounsellor() {
                         onChange={(e) => setLastName(e.target.value)}
                         type="text"
                         placeholder=" Last Name"
-                        value={lastName}
+                        Value={lastName}
+                        name={lastName}
                       />
                       {error && lastName.length <= 0 ? (
                         <FormHelperText color="red">
@@ -123,7 +157,8 @@ function AddCounsellor() {
                         onChange={(e) => setMobile(e.target.value)}
                         type="text"
                         placeholder="mobile"
-                        value={mobile}
+                        Value={mobile}
+                        name={mobile}
                       />
                       {error && mobile.length <= 0 ? (
                         <FormHelperText color="red">
@@ -141,10 +176,11 @@ function AddCounsellor() {
                         width="400px"
                         onChange={(e) => setAssign(e.target.value)}
                         placeholder="class"
+                        name={assign}
                       >
-                        <option value={assign}>Class A</option>
-                        <option value={assign}>Class B</option>
-                        <option value={assign}>Class C</option>
+                        <option Value={assign}>Class A</option>
+                        <option Value={assign}>Class B</option>
+                        <option Value={assign}>Class C</option>
                       </Select>
                       {error && assign.length <= 0 ? (
                         <FormHelperText color="red">
@@ -166,7 +202,8 @@ function AddCounsellor() {
                           onChange={(e) => setPassword(e.target.value)}
                           type="password"
                           placeholder="Password"
-                          value={password}
+                          Value={password}
+                          name={password}
                         />
                         {error && password.length <= 0 ? (
                           <FormHelperText color="red">
@@ -182,10 +219,11 @@ function AddCounsellor() {
                         <FormLabel>Username</FormLabel>
                         <Input
                           width="400px"
-                          value={username}
+                          Value={username}
                           onChange={(e) => setUserName(e.target.value)}
                           type="text"
                           placeholder=" username"
+                          name={username}
                         />
                         {error && username.length <= 0 ? (
                           <FormHelperText color="red">
@@ -205,8 +243,13 @@ function AddCounsellor() {
                 <Button w={200}>Cancel</Button>
               </NavLink>
               <Box paddingLeft={39}>
-                <Button w={200} colorScheme="blue" type="submit">
-                  Save
+                <Button
+                  w={200}
+                  colorScheme="blue"
+                  type="submit"
+                  onClick={handleUpdate}
+                >
+                  Update Counsellor
                 </Button>
               </Box>
             </HStack>
@@ -216,4 +259,4 @@ function AddCounsellor() {
     </>
   );
 }
-export default AddCounsellor;
+export default EditCounsellor;

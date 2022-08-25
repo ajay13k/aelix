@@ -9,6 +9,7 @@ export const API = {
   updateUser: `${BASE_URL}/api/updateUser`,
   deleteUser: `${BASE_URL}/api/deleteUser`,
   counsellorSearch: `${BASE_URL}/api/searchUser/m`,
+  addCounsellor:`${BASE_URL}/api/createUser`,
 
   getAllCountry: `${BASE_URL}/api/getAllCountry`,
   getStateBYCountryId: `${BASE_URL}/api/state`,

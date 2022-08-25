@@ -15,7 +15,7 @@ import {
   Center,
   Button,
 } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { FaUserGraduate } from "react-icons/fa";
@@ -115,7 +115,9 @@ const SidebarWithHeader = () => {
                   </HStack>
                 </MenuButton>
                 <MenuList>
-                  <MenuItem>Profile</MenuItem>
+                  <Link to="myprofile">
+                    <MenuItem>Profile</MenuItem>
+                  </Link>
                   <MenuDivider />
                   <MenuItem>
                     <button onClick={handleLogout}>Logout</button>

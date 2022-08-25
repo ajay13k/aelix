@@ -73,7 +73,7 @@ function Profile() {
   return (
     <>
       <SidebarWithHeader />
-      <Container maxW="100%" w="85%" pt="100px">
+      <Container maxW="100%" w="85%" pt="100px" pl={7}>
         <Flex align={"center"} justify={"center"} ml="200px">
           <form onSubmit={(e) => handleSubmit(e)}>
             <Stack>
@@ -173,13 +173,13 @@ function Profile() {
                     <Box paddingLeft="80px">
                       <FormControl id="country">
                         <FormLabel>City</FormLabel>
-                        <Select
+                        <Input
                           w={400}
                           onChange={(e) => setCity(e.target.value)}
-                          placeholder="Country"
+                          value="California"
+
                         >
-                          <option value={city}>indore</option>
-                        </Select>
+                        </Input>
                         {error && city.length <= 0 ? (
                           <FormHelperText color="red">
                             city is required
@@ -238,9 +238,9 @@ function Profile() {
                   </Box>
                 </Stack>
               </Box>
-              <HStack gap={38}>
+              <HStack gap={38} pl="15px">
                 <NavLink
-                  to="/sidebarwithheader"
+                  to="dashboard"
                   style={{ textDecoration: "none" }}
                 >
                   <Button w={200}>Cancel</Button>
