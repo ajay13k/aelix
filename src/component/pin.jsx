@@ -1,5 +1,4 @@
-import { AiOutlineArrowLeft } from "react-icons/ai";
-import { Link } from "react-router-dom";
+
 import PinInput from "react-pin-input";
 import { Container, Box,HStack } from "@chakra-ui/react";
 import SidebarWithHeader from "./sidebarwithheader/SidebarWithHeader";
@@ -7,12 +6,6 @@ const Pin = () => {
   return (
     <>
     <SidebarWithHeader/>
-      <HStack p={10} fontWeight="bold">
-        <AiOutlineArrowLeft />
-        <Link style={{ textDecoration: "none" }} to="SidebarWithHeader">
-          Go Home
-        </Link>
-      </HStack>
       <Container
         maxWidth="100%"
         style={{ padding: "0", display: "inline-block" }}
@@ -20,8 +13,27 @@ const Pin = () => {
       >
         <form id="myform">
           <div className="pinbox mt-4">
+          <div className="form-outline mb-4" name="rrr">
+              <label for="createPin">old   pin</label>
+              <div className="createPin">
+                <div>
+                  <PinInput
+                    length={4}
+                    initialValue="0000"
+                    type="numeric"
+                    inputMode="number"
+                    style={{ padding: "10px" }}
+                    onComplete={(value, index) => {
+                      this.setState({ pintt: value });
+                    }}
+                    autoSelect={true}
+                    regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
+                  />
+                </div>
+              </div>
+            </div>
             <div className="form-outline mb-4" name="rrr">
-              <label for="createPin">Create a safe pin</label>
+              <label for="createPin">Create a  pin</label>
               <div className="createPin">
                 <div>
                   <PinInput

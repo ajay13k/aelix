@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import { API } from "../../config/config";
 import { useParams } from "react-router-dom";
@@ -18,7 +18,6 @@ import {
 import SidebarWithHeader from "../sidebarwithheader/SidebarWithHeader";
 import { NavLink } from "react-router-dom";
 import { FaUserGraduate } from "react-icons/fa";
-import { useEffect } from "react";
 function EditCounsellor() {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -28,22 +27,30 @@ function EditCounsellor() {
   const [assign, setAssign] = useState("626272fe5f0f8244e6759fd8");
   const [error, seterror] = useState(false);
   const [consellor, setCousellor] = useState("");
-  const item = { name, lastName, mobile, password, username, assign };
+  const data = {
+    name: name,
+    phone: mobile,
+    username: username,
+    password: password,
+    lastname: lastName,
+    classId: "626273065f0f8244e6759fda",
+  };
   const token = localStorage.getItem("token");
   const { id } = useParams();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
-      name === "" ||
-      lastName === "" ||
-      mobile === "" ||
-      password === "" ||
-      username === "" ||
-      assign === 0
+      name.length === "" ||
+      lastName.length === "" ||
+      mobile.length === "" ||
+      password.length === "" ||
+      username.length === "" ||
+      assign.length === 0
     ) {
       seterror(true);
     } else {
+      handleUpdate()
     }
   };
   const getUser = async () => {
@@ -66,17 +73,17 @@ function EditCounsellor() {
       });
   };
 
-  getUser();
+  useEffect(() => {
+    getUser();
+
+  }, []);
 
   const handleUpdate = () => {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
     axios
-      .put(
-        `${API.updateUser}/${id}`,
-        { item },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
+      .put(`${API.updateUser}/${id}`, data, config)
       .then((response) => {
         return response.data;
       })
@@ -247,7 +254,7 @@ function EditCounsellor() {
                   w={200}
                   colorScheme="blue"
                   type="submit"
-                  onClick={handleUpdate}
+                  onClick={handleSubmit}
                 >
                   Update Counsellor
                 </Button>

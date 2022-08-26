@@ -25,8 +25,14 @@ function AddCounsellor() {
   const [username, setUserName] = useState("");
   const [assign, setAssign] = useState("626272fe5f0f8244e6759fd8");
   const [error, seterror] = useState(false);
-  const [consellor, setCousellor] = useState("");
-  const item = { name, lastName, mobile, password, username, assign };
+  const data = {
+    role: "counsellor",
+    name: name,
+    phone: mobile,
+    username: username,
+    password: password,
+    lastname: lastName,
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,23 +46,27 @@ function AddCounsellor() {
     ) {
       seterror(true);
     } else {
-      fetchData();
+      addCounsellor();
+      alert("add counsellor successfully");
+      window.location = "/counsellor";
     }
   };
   const token = localStorage.getItem("token");
 
-  const fetchData = async () => {
-    await axios({
-      method: "POST",
-      url: `${API.addCounsellor}`,
-      data: item,
+  const addCounsellor = async () => {
+    const config = {
       headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((dataa) => {
-        console.log(dataa, "datta");
+    };
+    await axios
+      .post(`${API.addCounsellor}`, data, config)
+      .then((response) => {
+        return response.data;
+      })
+      .then((data) => {
+        console.log("data", data);
       })
       .catch((err) => {
-        console.log(err, "errr");
+        console.log(err);
       });
   };
 
@@ -205,7 +215,12 @@ function AddCounsellor() {
                 <Button w={200}>Cancel</Button>
               </NavLink>
               <Box paddingLeft={39}>
-                <Button w={200} colorScheme="blue" type="submit">
+                <Button
+                  w={200}
+                  colorScheme="blue"
+                  type="submit"
+                  onClick={handleSubmit}
+                >
                   Save
                 </Button>
               </Box>

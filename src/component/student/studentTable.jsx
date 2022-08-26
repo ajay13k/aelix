@@ -9,13 +9,13 @@ import {
   Heading,
   Container,
   Spacer,
-  Box,
+  Flex,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaUserGraduate } from "react-icons/fa";
 import Pagination from "./pagination";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import SidebarWithHeader from "../sidebarwithheader/SidebarWithHeader";
 
@@ -25,16 +25,16 @@ function StudentTable() {
   const [student, setStudent] = useState([]);
   const [title, setTitle] = useState("");
   const [option, setOption] = useState([]);
+  const [getclass, setGetclass] = useState([]);
   const token = localStorage.getItem("token");
-  const loadPost = async () => {
+  const studentData = async () => {
     const response = await axios.get(`${API.getStudent}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     setStudent(response.data.data);
   };
-  useEffect(() => {
-    loadPost();
-  }, []);
+
+  studentData();
 
   const handleDelete = (item) => {
     axios
@@ -46,9 +46,8 @@ function StudentTable() {
       })
       .then((res) => {
         console.log(res.data);
-        loadPost();
-
-      })
+        studentData();
+      });
   };
 
   const indexOfLastPost = currentPage * postsPerPage;
@@ -64,11 +63,19 @@ function StudentTable() {
       setOption(student);
     } else {
       const post = student.filter(function (result) {
-        return result.assignClass.className === e;
+        return result.assignClass._id === e;
       });
       setOption(post);
     }
   };
+
+  const classdata = async () => {
+    const response = await axios.get(`${API.getClass}`);
+    setGetclass(response.data.data);
+  };
+  useEffect(() => {
+    classdata();
+  }, []);
 
   return (
     <>
@@ -83,6 +90,7 @@ function StudentTable() {
         <Grid templateColumns="repeat(2, 1fr)" gap={80}>
           <GridItem w="50%" h="10" m={30}>
             <Input
+              w="300px"
               onChange={(e) => setTitle(e.target.value)}
               size="md"
               placeholder="search students"
@@ -92,23 +100,19 @@ function StudentTable() {
             <HStack>
               <Text>Filter </Text>
               <Select
-                defaultValue={"all"}
+                w="400px"
+                defaultValue="all"
                 onChange={(e) => selectHandle(e.target.value)}
               >
                 <option value="all">all</option>
-                {student &&
-                  student.map((item) => {
-                    return (
-                      <>
-                        <option
-                          key={item._id}
-                          value={item.assignClass.className}
-                        >
-                          {item.assignClass.className}
-                        </option>
-                      </>
-                    );
-                  })}
+                {getclass.map((item) => {
+                  return (
+                    <option key={item._id} value={item._id}>
+                      {item.className}
+                    </option>
+                  );
+                })}
+                y
               </Select>
               <Spacer />
               <Text color="#005580">
@@ -144,21 +148,32 @@ function StudentTable() {
 
               .map((studentData) => (
                 <tr key={studentData._id}>
-                  <td>{studentData.name}</td>
+                  <td>
+                    <Flex>
+                      {studentData.name}
+                      <Text pl="10px" pr="10px">
+                        S/O
+                      </Text>
+                      {studentData.fatherName}
+                    </Flex>
+                  </td>
                   <td>{studentData.assignClass.className}</td>
                   <td></td>
                   <td></td>
                   <td>
                     <HStack>
                       <button
-                        // onClick={() => handleDelete(studentData._id)}
+                        onClick={() => handleDelete(studentData._id)}
                         className="btn btn-danger"
                       >
                         <AiFillDelete />
                       </button>
-                      <button className="btn btn-primary">
-                        <AiFillEdit />
-                      </button>
+
+                      <Link to={`/editstudent${studentData._id}`}>
+                        <button className="btn btn-primary">
+                          <AiFillEdit />
+                        </button>
+                      </Link>
                     </HStack>
                   </td>
                 </tr>

@@ -9,7 +9,7 @@ export const API = {
   updateUser: `${BASE_URL}/api/updateUser`,
   deleteUser: `${BASE_URL}/api/deleteUser`,
   counsellorSearch: `${BASE_URL}/api/searchUser/m`,
-  addCounsellor:`${BASE_URL}/api/createUser`,
+  addCounsellor: `${BASE_URL}/api/createUser`,
 
   getAllCountry: `${BASE_URL}/api/getAllCountry`,
   getStateBYCountryId: `${BASE_URL}/api/state`,
@@ -21,7 +21,6 @@ export const API = {
   studentUpdate: `${BASE_URL}/api/updateStudent`,
   studentDismiss: `${BASE_URL}/api/dismiss`,
   studentAssignClass: `${BASE_URL}/api/updateManyRecords`,
-
 
   saveAttendance: `${BASE_URL}/api/saveAttaindence`,
   updateAttendace: `${BASE_URL}/api/updateAttaindence`,

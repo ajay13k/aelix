@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { API } from "../../config/config";
+import { useParams } from "react-router-dom";
 import {
   Flex,
   Box,
@@ -18,16 +19,17 @@ import {
 import { NavLink } from "react-router-dom";
 import { FaUserGraduate } from "react-icons/fa";
 import SidebarWithHeader from "../sidebarwithheader/SidebarWithHeader";
-function AddStudent() {
+function EditStudent() {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [fatherName, setFatherName] = useState("");
-  const [dob, setDob] = useState("");
+  const [dob, setDob] = useState("22/03/2022");
   const [address, setAddress] = useState("");
   const [assign, setAssign] = useState("");
   const [error, seterror] = useState(false);
   const [getclass, setGetclass] = useState([]);
   const token = localStorage.getItem("token");
+  const { id } = useParams();
 
   const data = {
     name: name,
@@ -37,6 +39,8 @@ function AddStudent() {
     address: address,
     assignClass: assign,
   };
+
+  console.log("data",data)
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
@@ -49,20 +53,30 @@ function AddStudent() {
     ) {
       seterror(true);
     } else {
-      creatStudent();
-      alert("Add Student Succsessfully")
-      window.location = "/students";
     }
   };
 
-  const creatStudent = async () => {
+
+  const getStudent = async () => {
+    const response = await axios.get(`${API.getStudent}/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    setName(response.data[0].name);
+    setLastName(response.data[0].lastName);
+    setFatherName(response.data[0].fatherName);
+    setDob(response.data[0].DOB);
+    setAddress(response.data[0].address);
+    setAssign(response.data[0].assignClass);
+  };
+  getStudent();
+
+  const updateStudent =  () => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-
-    await axios
-      .post(`${API.addStudent}`, data, config)
-      .then((response) => {
+     axios.put(`${API.studentUpdate}/${id}`,data ,config)
+    .then((response) => {
         return response.data;
       })
       .then((data) => {
@@ -71,6 +85,7 @@ function AddStudent() {
       .catch((err) => {
         console.log(err);
       });
+
   };
 
   const classdata = async () => {
@@ -80,9 +95,10 @@ function AddStudent() {
   useEffect(() => {
     classdata();
   }, []);
+
+
   return (
     <>
-      {console.log(getclass)}
       <SidebarWithHeader />
       <Container maxW="1200" w="85%" ml="11%" pt="100px">
         <Flex align={"center"} justify={"center"}>
@@ -102,10 +118,10 @@ function AddStudent() {
                         <FormLabel>Name</FormLabel>
                         <Input
                           width="400px"
-                          onChange={(e) => setName(e.target.value)}
                           type="text"
                           placeholder="Name"
-                          value={name}
+                          defaultValue={name}
+                          onChange={(e) => setName(e.target.value)}
                         />
                         {error && name.length <= 0 ? (
                           <FormHelperText color="red">
@@ -121,10 +137,10 @@ function AddStudent() {
                         <FormLabel>Last Name</FormLabel>
                         <Input
                           width="400px"
-                          onChange={(e) => setLastName(e.target.value)}
                           type="text"
                           placeholder=" Last Name"
-                          value={lastName}
+                          defaultValue={lastName}
+                          onChange={(e) => setLastName(e.target.value)}
                         />
                         {error && lastName.length <= 0 ? (
                           <FormHelperText color="red">
@@ -142,10 +158,10 @@ function AddStudent() {
                         <FormLabel>Father Name</FormLabel>
                         <Input
                           width="400px"
-                          onChange={(e) => setFatherName(e.target.value)}
                           type="text"
                           placeholder="Father Name"
-                          value={fatherName}
+                          defaultValue={fatherName}
+                          onChange={(e) => setFatherName(e.target.value)}
                         />
                         {error && fatherName.length <= 0 ? (
                           <FormHelperText color="red">
@@ -161,10 +177,10 @@ function AddStudent() {
                         <FormLabel>Date Of Birth</FormLabel>
                         <Input
                           width="400px"
-                          onChange={(e) => setDob(e.target.value)}
                           type="date"
                           placeholder="Name"
-                          value={dob}
+                          defaultValue={dob}
+                          onChange={(e) => setDob(e.target.value)}
                         />
                         {error && dob.length <= 0 ? (
                           <FormHelperText color="red">
@@ -208,7 +224,7 @@ function AddStudent() {
                           <FormLabel>Address</FormLabel>
                           <Input
                             width="400px"
-                            value={address}
+                            defaultValue={address}
                             onChange={(e) => setAddress(e.target.value)}
                             type="text"
                             placeholder=" address"
@@ -231,13 +247,8 @@ function AddStudent() {
                   <Button w={200}>Cancel</Button>
                 </NavLink>
                 <Box paddingLeft={39}>
-                  <Button
-                    w={200}
-                    colorScheme="blue"
-                    type="submit"
-                    onClick={handleSubmit}
-                  >
-                    Save
+                  <Button w={200} colorScheme="blue" type="submit" onClick={updateStudent}>
+                    Update
                   </Button>
                 </Box>
               </HStack>
@@ -248,4 +259,4 @@ function AddStudent() {
     </>
   );
 }
-export default AddStudent;
+export default EditStudent;

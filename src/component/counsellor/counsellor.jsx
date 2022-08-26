@@ -60,8 +60,8 @@ function CounSellor() {
       })
       .then((response) => {
         console.log(response.data);
-        handleGetUser();
       });
+      handleGetUser();
   };
   const handleEdit = (id) => {
     axios
@@ -142,7 +142,7 @@ function CounSellor() {
                         <HStack>
                           <button
                             className="btn btn-danger"
-                            // onClick={() => handleDelete(studentData._id)}
+                            onClick={() => handleDelete(studentData._id)}
                           >
                             <AiFillDelete />
                           </button>

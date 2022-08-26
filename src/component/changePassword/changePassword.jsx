@@ -1,4 +1,6 @@
 import { useState } from "react";
+import axios from "axios";
+import { API } from "../../config/config";
 import {
   Button,
   Flex,
@@ -17,24 +19,47 @@ import {
 import { FiUnlock } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
 import SidebarWithHeader from "../sidebarwithheader/SidebarWithHeader";
-
+const token = localStorage.getItem("token");
 function Changepassword() {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [ConformPassword, setConformPassword] = useState("");
+  const [conformPassword, setConformPassword] = useState("");
   const [error, seterror] = useState(false);
+
+  const data = {
+    oldPassword: oldPassword,
+    newPassword: newPassword,
+    confirmPassword: conformPassword,
+    id: "62ab250790fc21522ada7413",
+  };
+  console.log("change password", data);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      oldPassword.length === 0 ||
-      newPassword.length === 0 ||
-      ConformPassword.length
-    ) {
+    if (oldPassword.length === 0 || newPassword.length === 0 || conformPassword.length === 0) {
       seterror(true);
     } else {
-      alert("Password Change Successfully");
+      changePassword();
+      alert("password change succsessfully")
     }
+  };
+
+  const changePassword = async () => {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    await axios
+      .post(`${API.changePassword}`, data, config)
+      .then((response) => {
+        return response.data;
+      })
+      .then((data) => {
+        console.log("data", data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -53,7 +78,10 @@ function Changepassword() {
                 </HStack>
                 <FormControl>
                   <FormLabel>Old Password</FormLabel>
-                  <Input onChange={(e) => setOldPassword(e.target.value)} />
+                  <Input
+                    value={oldPassword}
+                    onChange={(e) => setOldPassword(e.target.value)}
+                  />
                   {error && oldPassword.length <= 0 ? (
                     <FormHelperText color="red">
                       old password is required
@@ -67,6 +95,7 @@ function Changepassword() {
                   <Input
                     onChange={(e) => setNewPassword(e.target.value)}
                     type="password"
+                    value={newPassword}
                   />
                   {error && newPassword.length <= 0 ? (
                     <FormHelperText color="red">
@@ -79,10 +108,11 @@ function Changepassword() {
                 <FormControl>
                   <FormLabel>Conform Password</FormLabel>
                   <Input
+                    value={conformPassword}
                     onChange={(e) => setConformPassword(e.target.value)}
                     type="password"
                   />
-                  {error && ConformPassword.length <= 0 ? (
+                  {error && conformPassword.length <= 0 ? (
                     <FormHelperText color="red">
                       conform password is required
                     </FormHelperText>
@@ -97,14 +127,11 @@ function Changepassword() {
                     justify={"space-between"}
                   ></Stack>
                   <HStack gap={10}>
-                    <NavLink
-                      to="/dashboard"
-                      style={{ textDecoration: "none" }}
-                    >
+                    <NavLink to="/dashboard" style={{ textDecoration: "none" }}>
                       <Button w={200}>Cancel</Button>
                     </NavLink>
                     <Box>
-                      <Button w={200} colorScheme="blue" type="submit">
+                      <Button w={200} colorScheme="blue" type="submit" onClick={handleSubmit}>
                         Update
                       </Button>
                     </Box>
