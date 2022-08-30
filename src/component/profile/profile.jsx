@@ -17,7 +17,6 @@ import {
   Select,
   FormHelperText,
   Container,
-  Spacer,
 } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import SidebarWithHeader from "../sidebarwithheader/SidebarWithHeader";
@@ -34,6 +33,8 @@ function Profile() {
   const [mobileError, setMobileError] = useState("");
   console.log("anay", mobileError);
   const handleSubmit = (e) => {
+  
+
     e.preventDefault();
     if (
       email.length === 0 ||
@@ -47,11 +48,6 @@ function Profile() {
     } else {
       alert("Submit Form Successfully");
     }
-    const pattern = "/^(+d{1,3}[- ]?)?d{10}$/";
-    if (!pattern.match(mobile)) {
-      setMobileError("invalid number");
-    } else {
-    }
   };
   useEffect(() => {
     const loadPost = async () => {
@@ -63,7 +59,7 @@ function Profile() {
   useEffect(() => {
     const getState = async () => {
       const response = await axios.get(
-        `http://95.111.202.157:4001/api//state/${countryId}`
+        `${API.getStateBYCountryId}/${countryId}`
       );
       setState(response.data);
     };

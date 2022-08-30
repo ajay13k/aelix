@@ -21,7 +21,7 @@ import SidebarWithHeader from "../sidebarwithheader/SidebarWithHeader";
 
 function StudentTable() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(3);
+  const [postsPerPage] = useState(5);
   const [student, setStudent] = useState([]);
   const [title, setTitle] = useState("");
   const [option, setOption] = useState([]);
@@ -33,11 +33,11 @@ function StudentTable() {
     });
     setStudent(response.data.data);
   };
-
-  studentData();
-
-  const handleDelete = (item) => {
-    axios
+  useEffect(() => {
+    studentData();
+  }, []);
+  const handleDelete = async (item) => {
+    await axios
       .delete(`${API.studentDelete}`, {
         data: {
           id: [item],
@@ -45,9 +45,11 @@ function StudentTable() {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        console.log(res.data);
+        alert("delete record succsessfully")
         studentData();
-      });
+        
+      })
+
   };
 
   const indexOfLastPost = currentPage * postsPerPage;
@@ -80,6 +82,7 @@ function StudentTable() {
   return (
     <>
       <SidebarWithHeader />
+      
       <Container maxW="1200" w="85%" ml="15%" pt="100px">
         <HStack m="5">
           <Text fontSize={30}>
@@ -112,7 +115,7 @@ function StudentTable() {
                     </option>
                   );
                 })}
-                y
+                
               </Select>
               <Spacer />
               <Text color="#005580">
@@ -186,9 +189,13 @@ function StudentTable() {
           paginate={paginate}
           currentPage={currentPage}
         />
+
       </Container>
+
     </>
   );
 }
 
 export default StudentTable;
+
+

@@ -6,7 +6,6 @@ import Profile from "./component/profile/profile";
 import ChangePassword from "./component/changePassword/changePassword";
 import UsingFetch from "./component/student/studentAttendance";
 import Pin from "./component/pin";
-import Chatt from "./component/chat/chatt";
 import Page404 from "./component/404";
 import SidebarWithHeader from "./component/sidebarwithheader/SidebarWithHeader";
 import CounSellor from "./component/counsellor/counsellor";
@@ -15,6 +14,7 @@ import EditCounsellor from "./component/counsellor/editCounsellor";
 import StudentTable from "./component/student/studentTable";
 import EditStudent from "./component/student/editStudent";
 import AddStudent from "./component/student/addStudent";
+import Chat from "./component/chat/chat";
 function App() {
   return (
     <>
@@ -32,7 +32,7 @@ function App() {
         <Route path="/editcounsellor:id" component={EditCounsellor} />
         <Route path="/changepassword" component={ChangePassword} />
         <Route path="/pin" component={Pin} />
-        {/* <Route path="/chat" component={Chatt} /> */}
+        <Route path="/chat" component={Chat} />
         <Route path="/*" component={Page404} />
       </Switch>
     </>

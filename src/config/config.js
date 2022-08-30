@@ -1,4 +1,4 @@
-export const BASE_URL = "http://95.111.202.157:4001";
+export const BASE_URL = "http://localhost:4001";
 export const API = {
   login: `${BASE_URL}/api/login`,
   changePassword: `${BASE_URL}/api/resetPassword`,
@@ -13,6 +13,8 @@ export const API = {
 
   getAllCountry: `${BASE_URL}/api/getAllCountry`,
   getStateBYCountryId: `${BASE_URL}/api/state`,
+
+  createPin: `${BASE_URL}/api/createPin`,
 
   addStudent: `${BASE_URL}/api/createStudent`,
   getStudent: `${BASE_URL}/api/student`,

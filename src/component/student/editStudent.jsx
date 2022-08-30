@@ -69,7 +69,11 @@ function EditStudent() {
     setAddress(response.data[0].address);
     setAssign(response.data[0].assignClass);
   };
-  getStudent();
+
+  useEffect(() => {
+    getStudent();
+  }, []);
+
 
   const updateStudent =  () => {
     const config = {
@@ -108,7 +112,7 @@ function EditStudent() {
                 <HStack mb={30}>
                   <FaUserGraduate />
                   <Heading size="sm" mb={15}>
-                    Add Student
+                    Edit Student
                   </Heading>
                 </HStack>
                 <Stack spacing={4}>
