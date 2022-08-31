@@ -26,6 +26,7 @@ function StudentTable() {
   const [title, setTitle] = useState("");
   const [option, setOption] = useState([]);
   const [getclass, setGetclass] = useState([]);
+  const [handelDelete,setDelete]=useState("")
   const token = localStorage.getItem("token");
   const studentData = async () => {
     const response = await axios.get(`${API.getStudent}`, {
@@ -35,6 +36,7 @@ function StudentTable() {
   };
   useEffect(() => {
     studentData();
+
   }, []);
   const handleDelete = async (item) => {
     await axios
@@ -45,12 +47,14 @@ function StudentTable() {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
+        setDelete(res.data)
         alert("delete record succsessfully")
         studentData();
         
       })
 
   };
+
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;

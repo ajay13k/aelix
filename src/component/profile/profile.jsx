@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { API } from "../../config/config";
+import { API, BASE_URL } from "../../config/config";
 import {
   Flex,
   Box,
@@ -31,10 +31,9 @@ function Profile() {
   const [mobile, setMobile] = useState("");
   const [error, seterror] = useState(false);
   const [mobileError, setMobileError] = useState("");
+  const [user, setuser] = useState("");
   console.log("anay", mobileError);
   const handleSubmit = (e) => {
-  
-
     e.preventDefault();
     if (
       email.length === 0 ||
@@ -66,6 +65,21 @@ function Profile() {
     getState();
   });
 
+  const token = localStorage.getItem("token");
+  const handleGetUser = async () => {
+    await axios
+      .get(`${API.getAllUser}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        setuser(response.data);
+      });
+  };
+
+  useEffect(() => {
+    handleGetUser();
+  }, []);
+
   return (
     <>
       <SidebarWithHeader />
@@ -74,18 +88,28 @@ function Profile() {
           <form onSubmit={(e) => handleSubmit(e)}>
             <Stack>
               <HStack>
-                <Avatar size={"sm"} src={"https://bit.ly/sage-adebayo"} />
-                <VStack
-                  display={{ base: "none", md: "flex" }}
-                  alignItems="flex-start"
-                  spacing="1px"
-                  ml="2"
-                >
-                  <Text fontSize="sm">Jhany Bravo</Text>
-                  <Text fontSize="xs" color="gray.600">
-                    Manager
-                  </Text>
-                </VStack>
+                {user &&
+                  user.slice(0,1).map((data) => {
+                    return (
+                      <>
+                        <Avatar
+                          name="Dan Abrahmov"
+                          src={`${BASE_URL}/${data.image}`}
+                        />
+                        <VStack
+                          display={{ base: "none", md: "flex" }}
+                          alignItems="flex-start"
+                          spacing="1px"
+                          ml="2"
+                        >
+                          <Text fontSize="sm">Jhany Bravo</Text>
+                          <Text fontSize="xs" color="gray.600">
+                            Manager
+                          </Text>
+                        </VStack>
+                      </>
+                    );
+                  })}
               </HStack>
               <Box p={5}>
                 <Heading size="sm" mb={10}>
@@ -173,9 +197,7 @@ function Profile() {
                           w={400}
                           onChange={(e) => setCity(e.target.value)}
                           value="California"
-
-                        >
-                        </Input>
+                        ></Input>
                         {error && city.length <= 0 ? (
                           <FormHelperText color="red">
                             city is required
@@ -216,7 +238,6 @@ function Profile() {
                           <Input
                             w={400}
                             value={mobile}
-                            
                             onChange={(e) => setMobile(e.target.value)}
                             type="text"
                             placeholder=" mobile number"
@@ -235,10 +256,7 @@ function Profile() {
                 </Stack>
               </Box>
               <HStack gap={38} pl="15px">
-                <NavLink
-                  to="dashboard"
-                  style={{ textDecoration: "none" }}
-                >
+                <NavLink to="dashboard" style={{ textDecoration: "none" }}>
                   <Button w={200}>Cancel</Button>
                 </NavLink>
                 <Box paddingLeft={39}>

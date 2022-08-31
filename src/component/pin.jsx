@@ -1,5 +1,5 @@
 import PinInput from "react-pin-input";
-import { Container, Box } from "@chakra-ui/react";
+import { Container, Box, Text } from "@chakra-ui/react";
 import SidebarWithHeader from "./sidebarwithheader/SidebarWithHeader";
 import axios from "axios";
 import { API } from "../config/config";
@@ -17,13 +17,10 @@ const Pin = () => {
   return (
     <>
       <SidebarWithHeader />
-      <Container
-        maxWidth="100%"
-        style={{ padding: "0", display: "inline-block" }}
-        ml="30%"
-      >
+
+      <Box pl={400}>
         <form id="myform">
-          <div className="pinbox mt-4">
+          <div className="pinbox ">
             <div className="form-outline mb-4" name="rrr">
               <label for="createPin">Create a pin</label>
               <div className="createPin">
@@ -72,7 +69,7 @@ const Pin = () => {
             </Box>
           </div>
         </form>
-      </Container>
+      </Box>
     </>
   );
 };

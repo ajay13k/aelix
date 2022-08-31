@@ -19,6 +19,7 @@ import axios from "axios";
 import { MdDashboard } from "react-icons/md";
 import { API, BASE_URL } from "../../config/config";
 import SidebarWithHeader from "../sidebarwithheader/SidebarWithHeader";
+import { Link } from "react-router-dom";
 export default function Dashboard() {
   const [classData, setClassData] = useState([]);
   const [rows, setStudentDetail] = useState([]);
@@ -112,7 +113,7 @@ export default function Dashboard() {
           <Text>Class Dashboard</Text>
         </HStack>
 
-        <HStack pl="800px">
+        <HStack pl="800px" pb={4}>
           <Text>Filter By:</Text>
           <Select
             w={40}
@@ -130,6 +131,10 @@ export default function Dashboard() {
               })}
           </Select>
         </HStack>
+        <Text float="right" pr='22px'>
+          {" "}
+          <Link to="attendace">attendance report</Link>
+        </Text>
         <Grid templateColumns="repeat(4, 1fr)" mt={30} gap={4}>
           <GridItem>
             <Box

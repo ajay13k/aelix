@@ -23,7 +23,6 @@
 .main {
   margin-left: 160px;
   font-size: 28px;
-  /* Increased text to enable scrolling */
   padding: 0px 10px;
 }
 
@@ -44,7 +43,6 @@
   height: 70px;
   width: 100%;
   float: right;
-  /* background-color: #f2f2f2; */
 }
 
 
@@ -57,7 +55,6 @@
   padding: 50px;
   background-color: green;
   transition: transform .2s;
-  /* Animation */
   width: 200px;
   height: 200px;
   margin: 0 auto;

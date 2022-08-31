@@ -15,6 +15,7 @@ import StudentTable from "./component/student/studentTable";
 import EditStudent from "./component/student/editStudent";
 import AddStudent from "./component/student/addStudent";
 import Chat from "./component/chat/chat";
+import StudentAttendace from "./component/student/studentAttendance";
 function App() {
   return (
     <>
@@ -33,6 +34,7 @@ function App() {
         <Route path="/changepassword" component={ChangePassword} />
         <Route path="/pin" component={Pin} />
         <Route path="/chat" component={Chat} />
+        <Route path="/attendace" component={StudentAttendace} />
         <Route path="/*" component={Page404} />
       </Switch>
     </>

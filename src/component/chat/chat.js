@@ -8,19 +8,20 @@ import {
   Grid,
   GridItem,
   Container,
-  Avatar
+  Avatar,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import Footer from "./footer";
 import Header from "./header";
 import Messages from "./message";
 import SidebarWithHeader from "../sidebarwithheader/SidebarWithHeader";
-import { API,BASE_URL } from "../../config/config";
+import { API, BASE_URL } from "../../config/config";
 import axios from "axios";
 import { BsChatLeftDotsFill } from "react-icons/bs";
 
 const Chat = () => {
   const [counsellor, setCounselor] = useState([]);
+  const [search, setSearch] = useState("");
   const [messages, setMessages] = useState([
     { from: "computer", text: "Hi, My Name is ajay kushwa" },
     { from: "me", text: "Hey there" },
@@ -62,50 +63,65 @@ const Chat = () => {
 
   return (
     <>
-        <SidebarWithHeader />
-        <Grid templateColumns="repeat(2, 1fr)" w="100%" pt={10}>
-          <GridItem pl={250}>
-            <HStack mb={3} fontSize="30px">
-              <Text>
-                <BsChatLeftDotsFill />
-              </Text>
-              <Text fontSize="30px">Chat</Text>
-            </HStack>
-            <Text fontSize="30px">Messages</Text>
-            <Input w={300} placeholder="Seach Counsellor..." border="none" />
-            <Box mt={5} w={300} border="1px solid black" boxShadow={"2xl"}>
-              {counsellor &&
-                counsellor.slice(0, 5).map((data) => {
+      <SidebarWithHeader />
+      <Grid templateColumns="repeat(2, 1fr)" w="100%" pt={10}>
+        <GridItem pl={250}>
+          <HStack mb={3} fontSize="30px">
+            <Text>
+              <BsChatLeftDotsFill />
+            </Text>
+            <Text fontSize="30px">Chat</Text>
+          </HStack>
+          <Text fontSize="30px">Messages</Text>
+          <Input
+            w={300}
+            placeholder="Seach Counsellor..."
+            border="none"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <Box mt={5} w={300} border="1px solid black" boxShadow={"2xl"}>
+            {counsellor &&
+              counsellor
+                .filter((item) => {
+                  if (search === "") {
+                    return item;
+                  } else if (
+                    item.name.toLowerCase().includes(search.toLowerCase())
+                  ) {
+                    return item;
+                  }
+                })
+                .slice(0, 5)
+                .map((data) => {
                   return (
                     <>
                       <HStack spacing={6} mt="5" pl={10}>
-                      <Avatar
-                        name="Dan Abrahmov"
-                        src={`${BASE_URL}/${data.image}`}
-                      />
+                        <Avatar
+                          name="Dan Abrahmov"
+                          src={`${BASE_URL}/${data.image}`}
+                        />
                         <Text fontSize={"sm"}>{data.name}</Text>
                         <Text></Text>
                       </HStack>
                     </>
                   );
                 })}
-            </Box>
-          </GridItem>
-          <GridItem>
-            <Flex justify="center" align="center">
-              <Flex w="100%" flexDir="column">
-                <Header />
-                <Messages messages={messages} />
-                <Footer
-                  inputMessage={inputMessage}
-                  setInputMessage={setInputMessage}
-                  handleSendMessage={handleSendMessage}
-                />
-              </Flex>
+          </Box>
+        </GridItem>
+        <GridItem pr={10}>
+          <Flex justify="center" align="center">
+            <Flex w="100%" flexDir="column">
+              <Header />
+              <Messages messages={messages} />
+              <Footer
+                inputMessage={inputMessage}
+                setInputMessage={setInputMessage}
+                handleSendMessage={handleSendMessage}
+              />
             </Flex>
-          </GridItem>
-        </Grid>
-
+          </Flex>
+        </GridItem>
+      </Grid>
     </>
   );
 };

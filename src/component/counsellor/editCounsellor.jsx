@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { API } from "../../config/config";
 import { useParams } from "react-router-dom";
@@ -50,7 +50,8 @@ function EditCounsellor() {
     ) {
       seterror(true);
     } else {
-      handleUpdate()
+      alert("update successfully")
+      handleUpdate();
     }
   };
   const getUser = async () => {
@@ -75,7 +76,6 @@ function EditCounsellor() {
 
   useEffect(() => {
     getUser();
-
   }, []);
 
   const handleUpdate = () => {
@@ -94,7 +94,9 @@ function EditCounsellor() {
         console.log(err);
       });
   };
-
+  useEffect(() => {
+    handleUpdate();
+  }, []);
   return (
     <>
       <SidebarWithHeader />
