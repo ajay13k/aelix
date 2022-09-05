@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { API } from "../../config/config";
+import { API } from "./config/config";
 import {
   Button,
   Flex,
@@ -9,7 +9,6 @@ import {
   Heading,
   Input,
   Stack,
-  Image,
   FormHelperText,
   HStack,
   Box,
@@ -18,13 +17,13 @@ import {
 } from "@chakra-ui/react";
 import { FiUnlock } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
-import SidebarWithHeader from "../sidebarwithheader/SidebarWithHeader";
 const token = localStorage.getItem("token");
-function Changepassword() {
+function ForgotPassword() {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [conformPassword, setConformPassword] = useState("");
   const [error, seterror] = useState(false);
+  const [pcerror, setpcerror] = useState("");
 
   const data = {
     oldPassword: oldPassword,
@@ -42,6 +41,9 @@ function Changepassword() {
       conformPassword.length === 0
     ) {
       seterror(true);
+    } else if (newPassword !== conformPassword) {
+      const pcerror = "New Password and Conform Password must be same";
+      setpcerror(pcerror);
     } else {
       changePassword();
       alert("password change succsessfully");
@@ -68,7 +70,6 @@ function Changepassword() {
 
   return (
     <>
-      <SidebarWithHeader />
       <Container maxW="1200" w="85%" ml="15%">
         <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
           <Flex p={8} flex={1} align={"center"} justify={"center"}>
@@ -124,6 +125,7 @@ function Changepassword() {
                     ""
                   )}
                 </FormControl>
+                <Text color="red">{pcerror}</Text>
                 <Stack spacing={6}>
                   <Stack
                     direction={{ base: "column", sm: "row" }}
@@ -131,7 +133,7 @@ function Changepassword() {
                     justify={"space-between"}
                   ></Stack>
                   <HStack gap={10}>
-                    <NavLink to="/dashboard" style={{ textDecoration: "none" }}>
+                    <NavLink to="/" style={{ textDecoration: "none" }}>
                       <Button w={200}>Cancel</Button>
                     </NavLink>
                     <Box>
@@ -154,4 +156,4 @@ function Changepassword() {
     </>
   );
 }
-export default Changepassword;
+export default ForgotPassword;

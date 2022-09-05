@@ -89,7 +89,7 @@ function Profile() {
             <Stack>
               <HStack>
                 {user &&
-                  user.slice(0,1).map((data) => {
+                  user.slice(0, 1).map((data) => {
                     return (
                       <>
                         <Avatar

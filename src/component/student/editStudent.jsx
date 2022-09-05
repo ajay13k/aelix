@@ -40,7 +40,7 @@ function EditStudent() {
     assignClass: assign,
   };
 
-  console.log("data",data)
+  console.log("data", data);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
@@ -55,7 +55,6 @@ function EditStudent() {
     } else {
     }
   };
-
 
   const getStudent = async () => {
     const response = await axios.get(`${API.getStudent}/${id}`, {
@@ -74,13 +73,13 @@ function EditStudent() {
     getStudent();
   }, []);
 
-
-  const updateStudent =  () => {
+  const updateStudent = () => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-     axios.put(`${API.studentUpdate}/${id}`,data ,config)
-    .then((response) => {
+    axios
+      .put(`${API.studentUpdate}/${id}`, data, config)
+      .then((response) => {
         return response.data;
       })
       .then((data) => {
@@ -89,7 +88,6 @@ function EditStudent() {
       .catch((err) => {
         console.log(err);
       });
-
   };
 
   const classdata = async () => {
@@ -99,7 +97,6 @@ function EditStudent() {
   useEffect(() => {
     classdata();
   }, []);
-
 
   return (
     <>
@@ -251,7 +248,12 @@ function EditStudent() {
                   <Button w={200}>Cancel</Button>
                 </NavLink>
                 <Box paddingLeft={39}>
-                  <Button w={200} colorScheme="blue" type="submit" onClick={updateStudent}>
+                  <Button
+                    w={200}
+                    colorScheme="blue"
+                    type="submit"
+                    onClick={updateStudent}
+                  >
                     Update
                   </Button>
                 </Box>

@@ -50,7 +50,7 @@ function EditCounsellor() {
     ) {
       seterror(true);
     } else {
-      alert("update successfully")
+      alert("update successfully");
       handleUpdate();
     }
   };

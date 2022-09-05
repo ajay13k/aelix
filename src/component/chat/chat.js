@@ -1,13 +1,11 @@
 import {
   Flex,
-  Heading,
   Input,
   Text,
   HStack,
   Box,
   Grid,
   GridItem,
-  Container,
   Avatar,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
@@ -23,9 +21,9 @@ const Chat = () => {
   const [counsellor, setCounselor] = useState([]);
   const [search, setSearch] = useState("");
   const [messages, setMessages] = useState([
-    { from: "computer", text: "Hi, My Name is ajay kushwa" },
+    { from: "computer", text: "Hi, My Name is ...." },
     { from: "me", text: "Hey there" },
-    { from: "me", text: "Myself Tarun Sharma" },
+    { from: "me", text: "Myself Ajay Kushwah" },
     {
       from: "computer",
       text: "Nice to meet you. You can send me message and i'll reply you with same message.",

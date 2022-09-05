@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+
 import {
   Button,
   Flex,
@@ -16,7 +17,6 @@ import {
 } from "@chakra-ui/react";
 import { API } from "../../config/config";
 import { Link } from "react-router-dom";
-
 function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -98,7 +98,7 @@ function LoginForm() {
                   justify={"space-between"}
                 >
                   <Spacer />
-                  <Link style={{ textDecoration: "none" }} to="changepassword">
+                  <Link style={{ textDecoration: "none" }} to="forgotpassword">
                     <Text color="blue.500">Forgot Password?</Text>
                   </Link>
                 </Stack>

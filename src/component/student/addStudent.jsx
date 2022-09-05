@@ -50,7 +50,7 @@ function AddStudent() {
       seterror(true);
     } else {
       creatStudent();
-      alert("Add Student Succsessfully")
+      alert("Add Student Succsessfully");
       window.location = "/students";
     }
   };

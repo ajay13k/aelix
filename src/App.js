@@ -1,10 +1,10 @@
 import "bootstrap/dist/css/bootstrap.css";
+
 import { Route, Switch } from "react-router-dom";
 import LoginForm from "./component/loginForm/loginForm";
 import Dashboard from "./component/dashboard/dashboard";
 import Profile from "./component/profile/profile";
 import ChangePassword from "./component/changePassword/changePassword";
-import UsingFetch from "./component/student/studentAttendance";
 import Pin from "./component/pin";
 import Page404 from "./component/404";
 import SidebarWithHeader from "./component/sidebarwithheader/SidebarWithHeader";
@@ -16,6 +16,7 @@ import EditStudent from "./component/student/editStudent";
 import AddStudent from "./component/student/addStudent";
 import Chat from "./component/chat/chat";
 import StudentAttendace from "./component/student/studentAttendance";
+import ForgotPassword from "./forgotPassword";
 function App() {
   return (
     <>
@@ -27,7 +28,6 @@ function App() {
         <Route path="/students" component={StudentTable} />
         <Route path="/addstudent" component={AddStudent} />
         <Route path="/editstudent:id" component={EditStudent} />
-        <Route path="/studentAttendace" component={UsingFetch} />
         <Route path="/counsellor" component={CounSellor} />
         <Route path="/addcounsellor" component={AddCounsellor} />
         <Route path="/editcounsellor:id" component={EditCounsellor} />
@@ -35,6 +35,7 @@ function App() {
         <Route path="/pin" component={Pin} />
         <Route path="/chat" component={Chat} />
         <Route path="/attendace" component={StudentAttendace} />
+        <Route path="/forgotpassword" component={ForgotPassword} />
         <Route path="/*" component={Page404} />
       </Switch>
     </>

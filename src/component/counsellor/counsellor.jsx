@@ -61,7 +61,7 @@ function CounSellor() {
       .then((response) => {
         console.log(response.data);
       });
-      handleGetUser();
+    handleGetUser();
   };
   const handleEdit = (id) => {
     axios

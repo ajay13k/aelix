@@ -9,10 +9,8 @@ import {
   Grid,
   GridItem,
   HStack,
-  Spacer,
   Select,
   Container,
-  VStack,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -131,10 +129,10 @@ export default function Dashboard() {
               })}
           </Select>
         </HStack>
-        <Text float="right" pr='22px'>
+        {/* <Text float="right" pr="22px">
           {" "}
           <Link to="attendace">attendance report</Link>
-        </Text>
+        </Text> */}
         <Grid templateColumns="repeat(4, 1fr)" mt={30} gap={4}>
           <GridItem>
             <Box

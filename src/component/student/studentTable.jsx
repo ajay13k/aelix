@@ -10,6 +10,7 @@ import {
   Container,
   Spacer,
   Flex,
+  Button,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -17,16 +18,17 @@ import { FaUserGraduate } from "react-icons/fa";
 import Pagination from "./pagination";
 import { Link, NavLink } from "react-router-dom";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { BiPhoneCall } from "react-icons/bi";
 import SidebarWithHeader from "../sidebarwithheader/SidebarWithHeader";
 
 function StudentTable() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(5);
+  const [postsPerPage] = useState(4);
   const [student, setStudent] = useState([]);
   const [title, setTitle] = useState("");
   const [option, setOption] = useState([]);
   const [getclass, setGetclass] = useState([]);
-  const [handelDelete,setDelete]=useState("")
+  const [handelDelete, setDelete] = useState("");
   const token = localStorage.getItem("token");
   const studentData = async () => {
     const response = await axios.get(`${API.getStudent}`, {
@@ -36,7 +38,6 @@ function StudentTable() {
   };
   useEffect(() => {
     studentData();
-
   }, []);
   const handleDelete = async (item) => {
     await axios
@@ -47,14 +48,11 @@ function StudentTable() {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        setDelete(res.data)
-        alert("delete record succsessfully")
+        setDelete(res.data);
+        alert("delete record succsessfully");
         studentData();
-        
-      })
-
+      });
   };
-
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -83,10 +81,13 @@ function StudentTable() {
     classdata();
   }, []);
 
+  const handelEmegency = () => {
+    window.confirm("8888397456");
+  };
   return (
     <>
       <SidebarWithHeader />
-      
+
       <Container maxW="1200" w="85%" ml="15%" pt="100px">
         <HStack m="5">
           <Text fontSize={30}>
@@ -108,7 +109,7 @@ function StudentTable() {
               <Text>Filter </Text>
               <Select
                 w="400px"
-                defaultValue="all"
+                defaulValue="all"
                 onChange={(e) => selectHandle(e.target.value)}
               >
                 <option value="all">all</option>
@@ -119,7 +120,6 @@ function StudentTable() {
                     </option>
                   );
                 })}
-                
               </Select>
               <Spacer />
               <Text color="#005580">
@@ -166,7 +166,11 @@ function StudentTable() {
                   </td>
                   <td>{studentData.assignClass.className}</td>
                   <td></td>
-                  <td></td>
+                  <td>
+                    <Button onClick={handelEmegency}>
+                      <BiPhoneCall />
+                    </Button>
+                  </td>
                   <td>
                     <HStack>
                       <button
@@ -193,13 +197,8 @@ function StudentTable() {
           paginate={paginate}
           currentPage={currentPage}
         />
-
       </Container>
-
     </>
   );
 }
-
 export default StudentTable;
-
-
