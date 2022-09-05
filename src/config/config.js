@@ -30,3 +30,5 @@ export const API = {
   getCounsellorNameByClassId: `${BASE_URL}/api/getCouncellorbyClass`,
   getCounsellorStudent: `${BASE_URL}/api/getStu`,
 };
+
+

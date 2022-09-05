@@ -1,5 +1,4 @@
 import "bootstrap/dist/css/bootstrap.css";
-
 import { Route, Switch } from "react-router-dom";
 import LoginForm from "./component/loginForm/loginForm";
 import Dashboard from "./component/dashboard/dashboard";
