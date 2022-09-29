@@ -30,6 +30,7 @@ function StudentTable() {
   const [getclass, setGetclass] = useState([]);
   const [handelDelete, setDelete] = useState("");
   const token = localStorage.getItem("token");
+
   const studentData = async () => {
     const response = await axios.get(`${API.getStudent}`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -84,6 +85,19 @@ function StudentTable() {
   const handelEmegency = () => {
     window.confirm("8888397456");
   };
+
+  const handleSearch = async (item) => {
+    const token = localStorage.getItem("token");
+
+    await axios
+      .get(`${API.studentSearch}/${item}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setOption(res.data.data);
+      });
+  };
+
   return (
     <>
       <SidebarWithHeader />
@@ -99,7 +113,7 @@ function StudentTable() {
           <GridItem w="50%" h="10" m={30}>
             <Input
               w="300px"
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => handleSearch(e.target.value)}
               size="md"
               placeholder="search students"
             />
@@ -109,10 +123,10 @@ function StudentTable() {
               <Text>Filter </Text>
               <Select
                 w="400px"
-                defaulValue="all"
+                defaulValue ="all"
                 onChange={(e) => selectHandle(e.target.value)}
               >
-                <option value="all">all</option>
+                <option defaulValue ="all">all</option>
                 {getclass.map((item) => {
                   return (
                     <option key={item._id} value={item._id}>
@@ -143,15 +157,15 @@ function StudentTable() {
           </thead>
           <tbody>
             {currentPosts
-              .filter((item) => {
-                if (title === "") {
-                  return item;
-                } else if (
-                  item.name.toLowerCase().includes(title.toLowerCase())
-                ) {
-                  return item;
-                }
-              })
+              // .filter((item) => {
+              //   if (title === "") {
+              //     return item;
+              //   } else if (
+              //     item.name.toLowerCase().includes(title.toLowerCase())
+              //   ) {
+              //     return item;
+              //   }
+              // })
 
               .map((studentData) => (
                 <tr key={studentData._id}>

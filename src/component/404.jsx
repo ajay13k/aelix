@@ -1,4 +1,4 @@
-import {  Center, Heading } from "@chakra-ui/react";
+import { Center, Heading } from "@chakra-ui/react";
 const Page404 = () => {
   return (
     <>
